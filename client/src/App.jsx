@@ -38,7 +38,6 @@ function App() {
    
       <ChakraProvider>
        <ApolloProvider client={client}>
-        hi
         {/* <Navbar /> */}
         <Outlet />    
         </ApolloProvider>

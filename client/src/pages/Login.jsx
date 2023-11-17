@@ -5,10 +5,10 @@ import { useState } from "react";
 
 // TODO: Create a signup button that conditionally hides the login form and shows the signup form
 
-const signupHandler = () => {
-  const [signUp, setSignUp] = useState(false);
-  setSignUp(true);
-};
+// const signupHandler = () => {
+//   const [signUp, setSignUp] = useState(false);
+//   setSignUp(true);
+// };
 
 const Login = () => {
   return (
