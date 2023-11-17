@@ -16,7 +16,7 @@ import { LOGIN_USER } from "../utils/mutations";
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: "", password: "" });
-  const [validated] = useState(false);
+
   const [showAlert, setShowAlert] = useState(false);
 
   const [login, { error }] = useMutation(LOGIN_USER);
@@ -63,7 +63,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+      <Form onSubmit={handleFormSubmit}>
         <FormErrorMessage
           dismissible
           onClose={() => setShowAlert(false)}

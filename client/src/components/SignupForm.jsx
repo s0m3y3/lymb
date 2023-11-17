@@ -15,7 +15,7 @@ const SignupForm = () => {
     password: '',
   });
   // set state for form validation
-  const [validated] = useState(false);
+
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
@@ -64,7 +64,7 @@ const SignupForm = () => {
   return (
     <>
       {/* This is needed for the validation functionality above */}
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+      <Form onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
         <FormErrorMessage
           dismissible
