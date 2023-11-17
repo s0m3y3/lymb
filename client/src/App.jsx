@@ -7,6 +7,7 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import Login from "./pages/Login";
 
 // import Navbar from "./components/Navbar";
 
@@ -24,18 +25,25 @@ const authLink = setContext((_, { headers }) => {
     },
   };
 });
+
+
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
+
+
 function App() {
   return (
-    <ApolloProvider client={client}>
+   
       <ChakraProvider>
+       <ApolloProvider client={client}>
+        hi
         {/* <Navbar /> */}
-        <Outlet />
+        <Outlet />    
+        </ApolloProvider>
       </ChakraProvider>
-    </ApolloProvider>
+
   );
 }
 
