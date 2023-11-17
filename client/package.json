@@ -15,6 +15,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@fontsource-variable/lexend-peta": "^5.0.8",
     "bootstrap": "^5.2.3",
     "framer-motion": "^10.16.5",
     "graphql": "^16.6.0",
