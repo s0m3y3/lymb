@@ -72,7 +72,7 @@ const LoginForm = () => {
         >
           Something went wrong with your login credentials!
         </FormErrorMessage>
-        <FormControl className="mb-3">
+        <FormControl marginY={5}>
           <FormLabel htmlFor="email">Email</FormLabel>
           <Input
             type="text"
@@ -82,10 +82,10 @@ const LoginForm = () => {
             value={userFormData.email}
             required
           />
-          <FormHelperText type="invalid">Email is required!</FormHelperText>
+          {/* <FormHelperText type="invalid">Email is required!</FormHelperText> */}
         </FormControl>
 
-        <FormControl className="mb-3">
+        <FormControl  marginY={5}>
           <FormLabel htmlFor="password">Password</FormLabel>
           <Input
             type="password"
@@ -95,12 +95,13 @@ const LoginForm = () => {
             value={userFormData.password}
             required
           />
-          <FormHelperText type="invalid">Password is required!</FormHelperText>
+          {/* <FormHelperText type="invalid">Password is required!</FormHelperText> */}
         </FormControl>
         <Button
           disabled={!(userFormData.email && userFormData.password)}
           type="submit"
-          variant="success"
+          // variant="success"
+          colorScheme="blue"
         >
           Submit
         </Button>
