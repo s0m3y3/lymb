@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Exercise } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
@@ -11,6 +11,10 @@ const resolvers = {
       }
 
       throw AuthenticationError;
+    },
+      exercise: async () => {
+      const exercises = await Exercise.find();
+      return exercises;
     },
   },
 
@@ -36,6 +40,11 @@ const resolvers = {
 
       const token = signToken(user);
       return { token, user };
+    },
+
+    createExercise: async (parent, { input }) => {
+      const exercise = await Exercise.create(input);
+      return exercise;
     },
   },
 };
