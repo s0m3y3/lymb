@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Browse from "./pages/Browse.jsx";
+import Home from "./pages/Home.jsx";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <h1 className="display-2">Wrong page!</h1>,
     children: [
+      {
+        index: true,
+        element: <Home />,
+      },
       {
         path: "/login",
         element: <Login />,
@@ -23,7 +28,7 @@ const router = createBrowserRouter([
       {
         path: "/browse",
         element: <Browse />,
-      }
+      },
     ],
   },
 ]);
