@@ -1,52 +1,54 @@
 [
-    {
-        "username": "JohnDoe",
-        "email": "john@example.com",
-        "password": "password12345"
-    },
-    {
-        "username": "JaneSmith",
-        "email": "jane@example.com",
-        "password": "password12345"
-    },
-    {
-        "username": "DavidBrown",
-        "email": "david@example.com",
-        "password": "password12345"
-    },
-    {
-        "username": "EmilyJohnson",
-        "email": "emily@example.com",
-        "password": "password12345"
-    },
-    {
-        "username": "MichaelWilson",
-        "email": "michael@example.com",
-        "password": "password12345"
-    },
-    {
-        "username": "SophiaMartinez",
-        "email": "sophia@example.com",
-        "password": "password12345"
-    },
-    {
-        "username": "DanielTaylor",
-        "email": "daniel@example.com",
-        "password": "password12345"
-    },
-    {
-        "username": "OliviaAnderson",
-        "email": "olivia@example.com",
-        "password": "password12345"
-    },
-    {
-        "username": "JamesGarcia",
-        "email": "james@example.com",
-        "password": "password12345"
-    },
-    {
-        "username": "EmmaDavis",
-        "email": "emma@example.com",
-        "password": "password12345"
-    }
+  {
+    "username": "Test1",
+    "email": "Test1@gmail.com",
+    "_comment":"Password123!",
+    "password": "$2b$10$x9ghiYEv3Wfi60v4Xmh2H.wAvfONH35h0ulPkOrmWwMh4EawuBiT2"
+  },
+  {
+    "username": "Test2",
+    "email": "Test2@gmail.com",
+    "_comment":"Password124!",
+    "password": "$2b$10$MAjhq9l8aJLNV4xNf9EFh.RJtGJuN2LBHCAY6tGW6naYRjyekMaTa"
+  },
+  {
+    "username": "DavidBrown",
+    "email": "david@example.com",
+    "password": "password123!"
+  },
+  {
+    "username": "EmilyJohnson",
+    "email": "emily@example.com",
+    "password": "password1234!"
+  },
+  {
+    "username": "MichaelWilson",
+    "email": "michael@example.com",
+    "password": "password12345!"
+  },
+  {
+    "username": "SophiaMartinez",
+    "email": "sophia@example.com",
+    "password": "passw!ord12345"
+  },
+  {
+    "username": "DanielTaylor",
+    "email": "daniel@example.com",
+    "password": "passwo!rd12345"
+  },
+  {
+    "username": "OliviaAnderson",
+    "email": "olivia@example.com",
+    "password": "p!assword12345"
+  },
+  {
+    "username": "JamesGarcia",
+    "email": "james@example.com",
+    "password": "password123!!45"
+  },
+  {
+    "username": "EmmaDavis",
+    "email": "emma@example.com",
+    "password": "passwor!!d12345"
+  }
 ]
