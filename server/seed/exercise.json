@@ -3,54 +3,54 @@
         "name": "Jumping jack",
         "description": "A calisthenics exercise that involves jumping and moving arms and legs outward.",
         "type": "Cardio",
-        "targetBodyPart": "Whole body"
+        "target": "Whole body"
     },
     {
         "name": "Jump rope",
         "description": "Skipping rope exercise that improves cardiovascular health and coordination.",
         "type": "Cardio",
-        "targetBodyPart": "Legs, Arms, Shoulders"
+        "target": "Legs, Arms, Shoulders"
     },
     {
         "name": "Push up",
         "description": "An exercise that targets the chest, shoulders, and triceps.",
         "type": "Strength Training",
-        "targetBodyPart": "Chest, Shoulders, Triceps"
+        "target": "Chest, Shoulders, Triceps"
     },
     {
         "name": "High knee",
         "description": "A cardio exercise involving bringing knees up towards the chest alternately.",
         "type": "Cardio",
-        "targetBodyPart": "Legs, Core"
+        "target": "Legs, Core"
     },
     {
         "name": "Burpees",
         "description": "A full-body exercise involving squatting, jumping, and a push-up.",
         "type": "Cardio, Strength Training",
-        "targetBodyPart": "Whole body"
+        "target": "Whole body"
     },
     {
         "name": "Squats",
         "description": "A lower-body exercise that targets the quadriceps, hamstrings, and glutes.",
         "type": "Strength Training",
-        "targetBodyPart": "Legs, Glutes"
+        "target": "Legs, Glutes"
     },
     {
         "name": "Jump squats",
         "description": "Squatting exercise with an explosive jump at the top, targeting legs and glutes.",
         "type": "Cardio, Strength Training",
-        "targetBodyPart": "Legs, Glutes"
+        "target": "Legs, Glutes"
     },
     {
         "name": "Plank",
         "description": "An isometric exercise that engages the core muscles to maintain a position similar to a push-up.",
         "type": "Core, Stability",
-        "targetBodyPart": "Core, Shoulders"
+        "target": "Core, Shoulders"
     },
     {
         "name": "Mountain climbers",
         "description": "A dynamic exercise that mimics climbing, engaging the core, arms, and legs from a planking position.",
         "type": "Cardio, Core",
-        "targetBodyPart": "Core, Arms, Legs"
+        "target": "Core, Arms, Legs"
     }
 ]
