@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 
 import theme from "../components/theme";
+import "@fontsource-variable/lexend-peta";
 
 const Dashboard = () => {
   return (
@@ -31,19 +32,31 @@ const Dashboard = () => {
           My Workouts
         </Heading>
         <Card w="95%">
-          <CardHeader><Heading as='h3' size='md' color={theme.colors.darkCyan}>Full Body</Heading></CardHeader>
+          <CardHeader>
+            <Heading as="h3" size="md" color={theme.colors.darkCyan}>
+              Full Body
+            </Heading>
+          </CardHeader>
           <CardBody>
             I'm typing stuff in here to test some spacing issues
           </CardBody>
           <CardFooter></CardFooter>
         </Card>
         <Card w="95%">
-          <CardHeader><Heading as='h3' size='md' color={theme.colors.darkCyan}>Full Body</Heading></CardHeader>
+          <CardHeader>
+            <Heading as="h3" size="md" color={theme.colors.darkCyan}>
+              Full Body
+            </Heading>
+          </CardHeader>
           <CardBody></CardBody>
           <CardFooter></CardFooter>
         </Card>
         <Card w="95%">
-          <CardHeader><Heading as='h3' size='md' color={theme.colors.darkCyan}>Full Body</Heading></CardHeader>
+          <CardHeader>
+            <Heading as="h3" size="md" color={theme.colors.darkCyan}>
+              Full Body
+            </Heading>
+          </CardHeader>
           <CardBody></CardBody>
           <CardFooter></CardFooter>
         </Card>
@@ -65,14 +78,22 @@ const Dashboard = () => {
           Recent Exercises
         </Heading>
         <Card w="95%">
-          <CardHeader><Heading as='h3' size='md' color={theme.colors.darkCyan}>Full Body</Heading></CardHeader>
+          <CardHeader>
+            <Heading as="h3" size="md" color={theme.colors.darkCyan}>
+              Full Body
+            </Heading>
+          </CardHeader>
           <CardBody>
             I'm typing stuff in here to test some spacing issues
           </CardBody>
           <CardFooter></CardFooter>
         </Card>
         <Card w="95%">
-          <CardHeader><Heading as='h3' size='md' color={theme.colors.darkCyan}>Full Body</Heading></CardHeader>
+          <CardHeader>
+            <Heading as="h3" size="md" color={theme.colors.darkCyan}>
+              Full Body
+            </Heading>
+          </CardHeader>
           <CardBody></CardBody>
           <CardFooter></CardFooter>
         </Card>
