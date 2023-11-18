@@ -3,6 +3,7 @@ const typeDefs = `
     _id: ID!
     username: String!
     email: String
+    password: String
   }
 
   type Auth {
@@ -12,6 +13,7 @@ const typeDefs = `
 
   type Query {
     me: User
+    users: [User]
     exercise: [Exercise] 
   }
 
