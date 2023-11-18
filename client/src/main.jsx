@@ -12,12 +12,7 @@ import Interval from "./pages/Interval.jsx"
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <div>
-        <Navbar />
-        <App />
-      </div>
-    ),
+    element: <App />,
     errorElement: <h1 className="display-2">Wrong page!</h1>,
     children: [
       {
