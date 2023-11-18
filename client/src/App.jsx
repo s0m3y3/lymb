@@ -9,7 +9,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import Login from "./pages/Login";
 
-// import Navbar from "./components/Navbar";
+import Navbar from "./components/Navtab";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -38,7 +38,7 @@ function App() {
    
       <ChakraProvider>
        <ApolloProvider client={client}>
-        {/* <Navbar /> */}
+        <Navbar />
         <Outlet />    
         </ApolloProvider>
       </ChakraProvider>
