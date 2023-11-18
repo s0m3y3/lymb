@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Browse from "./pages/Browse.jsx";
 import Home from "./pages/Home.jsx";
 import Navbar from "./components/Navtab.jsx";
+import Interval from "./pages/Interval.jsx"
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/browse",
         element: <Browse />,
+      },
+      {
+        path: "/interval",
+        element: <Interval />,
       },
     ],
   },
