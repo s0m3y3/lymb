@@ -1,36 +1,36 @@
-import { Container } from "@chakra-ui/react";
-import React, { useRef, useEffect, useState } from "react";
+import React from "react";
 
-export default function Interval() {
-  const [num, setNum] = useState(100);
-  const [pause, setPause] = useState(false);
-  
-  let intervalRef = useRef();
-  
-  const decreaseNum = () => setNum((prev) => prev - 1);
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+// import ReactDOM from "react-dom/client";
 
-  useEffect(() => {
-    intervalRef.current = setInterval(decreaseNum, 1000);
+const Interval = () => {
+    return (
+    <h1>
+    <CountdownCircleTimer
+      isPlaying 
+      
+      duration={7}
+      colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+      colorsTime={[7, 5, 2, 0]}
+    >
+      {({ remainingTime }) => remainingTime}
+      
+    </CountdownCircleTimer>
 
-    return () => clearInterval(intervalRef.current);
-  }, []);
-  
-  const handleClick = () => {
-    if (!pause) {
-      clearInterval(intervalRef.current);
-    } else {
-      intervalRef.current = setInterval(decreaseNum, 1000);
-    }
-    setPause((prev) => !prev);
-  };
-  <Container>
-  
-</Container>
-  return (
-    <div id="timer">
-      <div>{num}</div>
-      <button onClick={handleClick}>{pause ? "Start" : "Pause"}</button>
-    </div>
-  );
+    <button
+        type="button"
+        onClick={() => setColor("red")}
+      >Start</button>
+      <br />
+        <button
+        type="button"
+        onClick={() => setColor("red")}
+      >Stop</button>
+    </h1>
+)
 }
+  
 
+ 
+
+export default Interval;
