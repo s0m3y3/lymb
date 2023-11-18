@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./App.jsx";
 import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -10,11 +11,15 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <h1 className="display-2">Wrong page!</h1>,
     children: [
-     {
-        path: '/login',
-        element: <Login />
-      }
-    ]
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+    ],
   },
 ]);
 

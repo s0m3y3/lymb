@@ -1,6 +1,6 @@
 import { extendTheme } from "@chakra-ui/react";
-
-
+import { cardTheme } from './cardTheme';
+// All theme elements compiled for export
 const theme = extendTheme({
   // To use theme colors, Use these imports at the top of each page
   // import { theme } from './components/theme.js';
