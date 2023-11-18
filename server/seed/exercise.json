@@ -18,24 +18,6 @@
         "targetBodyPart": "Chest, Shoulders, Triceps"
     },
     {
-        "name": "Jumping jack",
-        "description": "A calisthenics exercise that involves jumping and moving arms and legs outward.",
-        "type": "Cardio",
-        "targetBodyPart": "Whole body"
-    },
-    {
-        "name": "Jump rope",
-        "description": "Skipping rope exercise that improves cardiovascular health and coordination.",
-        "type": "Cardio",
-        "targetBodyPart": "Legs, Arms, Shoulders"
-    },
-    {
-        "name": "Push up",
-        "description": "A classic bodyweight exercise that targets the chest, shoulders, and triceps.",
-        "type": "Strength Training",
-        "targetBodyPart": "Chest, Shoulders, Triceps"
-    },
-    {
         "name": "High knee",
         "description": "A cardio exercise involving bringing knees up towards the chest alternately.",
         "type": "Cardio",
