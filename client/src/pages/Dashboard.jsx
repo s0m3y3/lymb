@@ -4,7 +4,6 @@ import {
   CardFooter,
   CardHeader,
   Heading,
-  Spacer,
   VStack,
   Wrap,
 } from "@chakra-ui/react";
