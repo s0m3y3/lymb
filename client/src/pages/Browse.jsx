@@ -4,6 +4,7 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Collapse,
   Heading,
   Input,
   InputLeftAddon,
@@ -20,11 +21,20 @@ import "@fontsource-variable/lexend-peta";
 import strengthLogo from "../assets/dumbbell.png"
 import cardioLogo from "../assets/cardio.png"
 import stretchLogo from "../assets/stretch.png"
+import coreLogo from "../assets/core.png"
+import { useQuery } from '@apollo/client';
+import { QUERY_EXERCISE } from '../utils/queries.js'; // Import your mutations
 
 const Browse = () => {
+  //todo: Figure out this query exercise. It does not work. 
+  const data  = useQuery(QUERY_EXERCISE);
+  const exercises = data?.exercises || [];
+  console.log(data)
+  console.log(exercises)
+
   return (
     <Container maxW="100%">
-      <Box my={10}>
+      <Box my={10} >
         <InputGroup>
           <InputLeftAddon
             fontFamily={theme.fonts.heading}
@@ -38,6 +48,7 @@ const Browse = () => {
           </InputRightAddon>
         </InputGroup>
       </Box>
+
       <Box my={10} display="flex" flexDirection={'column'}>
         <Heading mb={5} alignSelf='center' fontFamily={theme.fonts.heading} as="h2" size="md">
           Browse by Type
@@ -54,9 +65,9 @@ const Browse = () => {
                 </Heading>
             </CardHeader>
             <CardBody>
-              <Image />
             </CardBody>
           </Card>
+
           <Card width={150}>
             <CardHeader>
               <Heading
@@ -68,9 +79,9 @@ const Browse = () => {
               </Heading>
             </CardHeader>
             <CardBody>
-              <Image />
             </CardBody>
           </Card>
+
           <Card width={150}>
             <CardHeader>
               <Heading
@@ -82,23 +93,27 @@ const Browse = () => {
               </Heading>
             </CardHeader>
             <CardBody>
-              <Image />
             </CardBody>
           </Card>
+    
           <Card width={150}>
             <CardHeader>
               <Heading
                 color={theme.colors.darkCyan}
                 as="h3"
                 size="sm"
-              ></Heading>
+              >
+                <Image src={coreLogo} alt="core-photo"></Image>
+              </Heading>
             </CardHeader>
-            <CardBody>
-              <Image />
+          <CardBody>
+
             </CardBody>
           </Card>
+
         </Wrap>
       </Box>
+
       <Box my={10} display='flex' flexDirection={'column'}>
         <Heading mb={5} alignSelf='center' fontFamily={theme.fonts.heading} as="h2" size="md">
           Results
@@ -106,40 +121,49 @@ const Browse = () => {
         <SimpleGrid spacing={10} minChildWidth={300}>
           <Card>
             <CardHeader></CardHeader>
-            <CardBody></CardBody>
+            <CardBody>testing {exercises}</CardBody>
           </Card>
+          
+          <Card>
+            <CardHeader>Squats (delete me later)</CardHeader>
+            <CardBody>A lower-body exercise that targets the quadriceps, hamstrings, and glutes. Legs, Glutes. </CardBody>
+          </Card>
+
           <Card>
             <CardHeader></CardHeader>
             <CardBody></CardBody>
           </Card>
+
           <Card>
             <CardHeader></CardHeader>
             <CardBody></CardBody>
           </Card>
+
           <Card>
             <CardHeader></CardHeader>
             <CardBody></CardBody>
           </Card>
+
           <Card>
             <CardHeader></CardHeader>
             <CardBody></CardBody>
           </Card>
+
           <Card>
             <CardHeader></CardHeader>
             <CardBody></CardBody>
           </Card>
+
           <Card>
             <CardHeader></CardHeader>
             <CardBody></CardBody>
           </Card>
+
           <Card>
             <CardHeader></CardHeader>
             <CardBody></CardBody>
           </Card>
-          <Card>
-            <CardHeader></CardHeader>
-            <CardBody></CardBody>
-          </Card>
+
           <Card>
             <CardHeader></CardHeader>
             <CardBody></CardBody>

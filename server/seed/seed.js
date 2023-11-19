@@ -32,9 +32,35 @@ connection.once('open', async () => {
       await connection.dropCollection('workout');
       console.log('Workout db dropped.');
     }
+
+
+
+//todo: grab _ID from databaseExercise by using name from workoutData. Then delete name in workoutData and replace it with ID.
+
+//     const databaseExercise = await Workout.find();
+//     workoutData.forEach((workout) => {
+//       // Iterate through each exercise in the current workout
+//       workout.exercises.forEach((exercise) => {
+//           const foundExercise = databaseExercise.find(
+//               (dbExercise) => dbExercise.name === exercise.name
+//           );
+  
+//           if (foundExercise) {
+//               // If a matching exercise is found in the database, replace the name with its ID
+//               exercise.id = foundExercise._id.toString(); // Store the ID in the exercise object
+//               delete exercise.name; // Remove the 'name' property
+//           }
+//       });
+//   });
+// console.log(workoutData)
+
+
+
+
+
     //seed workout
     await Workout.collection.insertMany(workoutData);
-    console.log('Workouts seeded.');
+    // console.log('Workouts seeded.');
 
     //drops users data
     let userCheck = await connection.db.listCollections({ name: 'users' }).toArray();
@@ -43,7 +69,7 @@ connection.once('open', async () => {
     console.log('Users db dropped.');
     }
 
-    //function to grab workout from database - needed for _ID. 
+    //Grabs workout from database - needed for _ID. 
     const databaseWorkout = await Workout.find();
 
     //function that randomly returns, 0-3 workout
@@ -61,9 +87,9 @@ connection.once('open', async () => {
     const hashedUsers = await Promise.all(
       userData.map(async (user) => {
         const hashedPassword = await bcrypt.hash(user.password, 10); // Hash the password
-        // Create new user with hashed password
+        //generate random 0-3 workouts for users
         setWorkout = await getRandomWorkoutIDs();
-        // console.log(abc)
+        // Create new user with hashed password
         return {
           username: user.username,
           email: user.email,
@@ -72,9 +98,9 @@ connection.once('open', async () => {
         };
       })
     );
-
+    //send hashedUser to database.
     await User.collection.insertMany(hashedUsers);   
-    console.log('Users seeded.');
+    // console.log('Users seeded.');
 
     console.log('FINISHED seeding Data.');
     process.exit(0);

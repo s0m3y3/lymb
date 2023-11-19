@@ -4,16 +4,13 @@
         "description": "A high-intensity cardio workout to boost your heart rate.",
         "exercises": [
             {
-                "name": "Jumping jack",
-                "description": "A calisthenics exercise that involves jumping and moving arms and legs outward."
+                "name": "Jumping jack"
             },
             {
-                "name": "High knee",
-                "description": "A cardio exercise involving bringing knees up towards the chest alternately."
+                "name": "High knee"
             },
             {
-                "name": "Mountain climbers",
-                "description": "A dynamic exercise that mimics climbing, engaging the core, arms, and legs from a planking position."
+                "name": "Mountain climbers"
             }
         ]
     },
@@ -22,12 +19,10 @@
         "description": "A workout focused on building strength and muscle.",
         "exercises": [
             {
-                "name": "Push up",
-                "description": "An exercise that targets the chest, shoulders, and triceps."
+                "name": "Push up"
             },
             {
-                "name": "Squats",
-                "description": "A lower-body exercise that targets the quadriceps, hamstrings, and glutes."
+                "name": "Squats"
             }
         ]
     },
@@ -36,14 +31,11 @@
         "description": "An intense workout focusing on the lower body.",
         "exercises": [
             {
-                "name": "Squats",
-                "description": "A lower-body exercise that targets the quadriceps, hamstrings, and glutes."
+                "name": "Squats"
             },
             {
-                "name": "Jump squats",
-                "description": "Squatting exercise with an explosive jump at the top, targeting legs and glutes."
+                "name": "Jump squats"
             }
         ]
     }
-
 ]
