@@ -1,18 +1,25 @@
-import { useState, useEffect } from 'react';
-import { FormControl, FormLabel, FormHelperText, FormErrorMessage, Button, Input } from '@chakra-ui/react';
-import { Form } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import {
+  FormControl,
+  FormLabel,
+  FormHelperText,
+  FormErrorMessage,
+  Button,
+  Input,
+} from "@chakra-ui/react";
+import { Form } from "react-router-dom";
 
-import { useMutation } from '@apollo/client';
-// import { ADD_USER } from '../utils/mutations';
+import { useMutation } from "@apollo/client";
+import { ADD_USER } from "../utils/mutations";
 
-// import Auth from '../utils/auth';
+import Auth from '../utils/auth';
 
 const SignupForm = () => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
+    username: "",
+    email: "",
+    password: "",
   });
   // set state for form validation
 
@@ -55,15 +62,14 @@ const SignupForm = () => {
     }
 
     setUserFormData({
-      name: '',
-      email: '',
-      password: '',
+      name: "",
+      email: "",
+      password: "",
     });
   };
 
   return (
     <>
-      {/* This is needed for the validation functionality above */}
       <Form onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
         <FormErrorMessage
@@ -75,7 +81,7 @@ const SignupForm = () => {
           Something went wrong with your signup!
         </FormErrorMessage>
 
-        <FormControl className='mb-3'>
+        <FormControl marginY={5}>
           <FormLabel htmlFor="name">Name</FormLabel>
           <Input
             type="text"
@@ -85,12 +91,11 @@ const SignupForm = () => {
             value={userFormData.name}
             required
           />
-          <FormHelperText type="invalid">
+          {/* <FormHelperText type="invalid">
             Name is required!
-          </FormHelperText>
+          </FormHelperText> */}
         </FormControl>
-
-        <FormControl className='mb-3'>
+        <FormControl marginY={5}>
           <FormLabel htmlFor="email">Email</FormLabel>
           <Input
             type="email"
@@ -100,12 +105,12 @@ const SignupForm = () => {
             value={userFormData.email}
             required
           />
-          <FormHelperText type="invalid">
+          {/* <FormHelperText type="invalid">
             Email is required!
-          </FormHelperText>
+          </FormHelperText> */}
         </FormControl>
 
-        <FormControl className='mb-3'>
+        <FormControl marginY={5}>
           <FormLabel htmlFor="password">Password</FormLabel>
           <Input
             type="password"
@@ -115,20 +120,17 @@ const SignupForm = () => {
             value={userFormData.password}
             required
           />
-          <FormHelperText type="invalid">
+          {/* <FormHelperText type="invalid">
             Password is required!
-          </FormHelperText>
+          </FormHelperText> */}
         </FormControl>
         <Button
           disabled={
-            !(
-              userFormData.name &&
-              userFormData.email &&
-              userFormData.password
-            )
+            !(userFormData.name && userFormData.email && userFormData.password)
           }
           type="submit"
-          variant="success"
+          // variant="success"
+          colorScheme="blue"
         >
           Submit
         </Button>
