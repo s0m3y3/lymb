@@ -44,7 +44,7 @@
     {
         "name": "Plank",
         "description": "An isometric exercise that engages the core muscles to maintain a position similar to a push-up.",
-        "type": "Core, Stability",
+        "type": "Core",
         "target": "Core, Shoulders"
     },
     {
@@ -53,4 +53,5 @@
         "type": "Cardio, Core",
         "target": "Core, Arms, Legs"
     }
+    
 ]
