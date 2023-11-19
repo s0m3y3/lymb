@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 // import schema from Exercise.js
-// const exerciseSchema = require('./Exercise');
+const Exercise = require('./Exercise');
 // const workoutSchema = require('./Workout')
 const userSchema = new Schema(
   {
@@ -24,10 +24,10 @@ const userSchema = new Schema(
  
 
     
-    // exercises: [{
-    //     type: Schema.types.ObjectId, 
-    //     ref: "Exercise"
-    // }],
+    savedExercises: [{
+        type: Schema.Types.ObjectId, 
+        ref: "Exercise"
+    }],
     // workouts: [{
     //     type: Schema.types.ObjectId,
     //     ref: "Workout"
