@@ -8,6 +8,7 @@ import Browse from "./pages/Browse.jsx";
 import Home from "./pages/Home.jsx";
 import Navbar from "./components/Navtab.jsx";
 import Interval from "./pages/Interval.jsx"
+import Signup from "./pages/Signup.jsx";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
       },
       {
         path: "/dashboard",

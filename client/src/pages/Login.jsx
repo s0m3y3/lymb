@@ -14,7 +14,7 @@ const Login = () => {
   return (
     <Container>
       <LoginForm />
-      {/* <SignupForm /> */}
+
     </Container>
   );
 };
