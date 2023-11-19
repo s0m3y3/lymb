@@ -51,6 +51,20 @@ const resolvers = {
       const exercise = await Exercise.create(input);
       return exercise;
     },
+    saveExercise: async (parent, { exerciseData }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { savedExercises: exerciseData } },
+          { new: true }
+        );
+
+        return updatedUser;
+      }
+
+      throw AuthenticationError;
+    },
+
   },
 };
 

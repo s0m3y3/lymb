@@ -4,6 +4,7 @@ const typeDefs = `
     username: String!
     email: String
     password: String
+    savedExercises: [Exercise]
   }
 
   type Auth {
@@ -14,21 +15,25 @@ const typeDefs = `
   type Query {
     me: User
     users: [User]
-    exercise: [Exercise] 
+    exercise: Exercise
+  }
+
+  input ExerciseInput {
+    _id: ID!
+    type: String!
+    name: String!
+    description: String!
+    target: String!
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     createExercise(input: ExerciseInput!): Exercise
+    saveExercise(exerciseData: ExerciseInput!): User
   }
 
-  input ExerciseInput {
-    type: String!
-    exerciseName: String!
-    description: String!
-    target: String
-  }
+
 
   type Exercise {
     _id: ID!
