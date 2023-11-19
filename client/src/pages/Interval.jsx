@@ -26,9 +26,7 @@ function Interval() {
     // const [start, setStart] = useState(false);
     const [timer, setTimer] = React.useState(0);
     const [check, setCheck] = useState(false);
-  
-     
-  
+ 
     const SetlectReset = () => {
         
       let options = [10, 20, 30, 40, 50, 60]
