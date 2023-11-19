@@ -17,6 +17,9 @@ import {
 
 import theme from "../components/theme";
 import "@fontsource-variable/lexend-peta";
+import strengthLogo from "../assets/dumbbell.png"
+import cardioLogo from "../assets/cardio.png"
+import stretchLogo from "../assets/stretch.png"
 
 const Browse = () => {
   return (
@@ -46,7 +49,9 @@ const Browse = () => {
                 color={theme.colors.darkCyan}
                 as="h3"
                 size="sm"
-              ></Heading>
+              >
+                <Image src={strengthLogo} alt="Strength-photo"></Image>
+                </Heading>
             </CardHeader>
             <CardBody>
               <Image />
@@ -58,7 +63,9 @@ const Browse = () => {
                 color={theme.colors.darkCyan}
                 as="h3"
                 size="sm"
-              ></Heading>
+              >
+                <Image src={cardioLogo} alt="cardio-photo"></Image>
+              </Heading>
             </CardHeader>
             <CardBody>
               <Image />
@@ -70,7 +77,9 @@ const Browse = () => {
                 color={theme.colors.darkCyan}
                 as="h3"
                 size="sm"
-              ></Heading>
+              >
+              <Image src={stretchLogo} alt="stretch-photo"></Image>
+              </Heading>
             </CardHeader>
             <CardBody>
               <Image />

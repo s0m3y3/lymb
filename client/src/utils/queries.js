@@ -9,3 +9,14 @@ export const QUERY_ME = gql`
     }
 }
 `
+export const QUERY_EXERCISE = gql`
+  {
+    exercise {
+      _id: ID!
+      type: String!
+      name: String!
+      description: String!
+      target: String
+    }
+}
+`

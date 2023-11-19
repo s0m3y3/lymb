@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt');
 
 // import schema from Exercise.js
 const Exercise = require('./Exercise');
-// const workoutSchema = require('./Workout')
+//import schema from Workout.js
+const workoutSchema = require('./Workout')
 const userSchema = new Schema(
   {
     username: {
@@ -21,17 +22,14 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
- 
-
-    
     savedExercises: [{
         type: Schema.Types.ObjectId, 
         ref: "Exercise"
     }],
-    // workouts: [{
-    //     type: Schema.types.ObjectId,
-    //     ref: "Workout"
-    // }]
+    workouts: [{
+        type: Schema.Types.ObjectId,
+        ref: "Workout"
+    }],
   },
   // set this to use virtual below
   {
