@@ -1,7 +1,7 @@
-
+import { Center } from '@chakra-ui/react'
 import React from "react";
-import { useState } from "react";
-import { useTimer } from 'use-timer';
+import { useState, useEffect } from "react";
+// import { useTimer } from 'use-timer';
 
 
 
@@ -26,13 +26,12 @@ function Interval() {
     // const [start, setStart] = useState(false);
     const [timer, setTimer] = React.useState(0);
     const [check, setCheck] = useState(false);
-        // const { pause } = useTimer({initialTime: 60,
-    //     timerType: 'DECREMENTAL',});
-    
+  
+     
   
     const SetlectReset = () => {
         
-      let options = [10, 20, 30, 40, 50, 60];
+      let options = [10, 20, 30, 40, 50, 60]
       return (
         <div style={{ display: "flex" }}>
           <select
@@ -41,38 +40,17 @@ function Interval() {
             onChange={(e) => setSelect(e.target.value)}
             style={{
               marginRight: "20px",
-              backgroundColor: "honeydew",
-              border: "none",
-              fontSize: "30px"
+              border: "bold",
+              fontSize: "25px"
             }}
           >
             {options.map((opt) => (
               <option value={opt} key={opt}>
-                {opt + " sec"}
+                {opt + " SEC"}
               </option>
             ))}
           </select>
  
-          {/* <button
-          
-            className="reset"
-            onClick={() => setTimer((prevTimer) => prevTimer + 1)}
-            style={{
-            
-              marginLeft: "20px",
-              backgroundColor: "teal",
-              color: "white",
-              border: "none",
-              fontSize: "18px",
-              paddingLeft: "12px",
-              paddingRight: "12px",
-              paddingTop: "5px",
-              paddingBottom: "5px",
-              borderRadius: "6px"
-            }}
-          >
-            Reset
-          </button> */}
          {check ? (
           <button onClick={()=>setCheck(prevCheck => !prevCheck)}
           style={{
@@ -106,20 +84,22 @@ function Interval() {
               }}> Play </button>
 
          ) 
-        
+         
+         
         }
         </div>
       );
     };
     
     return (
-   
-        <div className="timer-wrapper center" >
+
+   <Center>
+        <div className="timer-wrapper" >
           <CountdownCircleTimer
             key={timer}
-            
             isPlaying = {check}
             duration={select}
+            
             colors={['#004777', '#F7B801', '#A30000', '#A30000']}
             colorsTime={[60, 40, 20, 10]}
             onComplete={() => [false, 1000]}
@@ -131,54 +111,13 @@ function Interval() {
           <br />
           <SetlectReset />
         
-        
-          
         </div>
-      
+      </Center> 
     );
     
-    
   }
-  
   const rootElement = document.getElementById("root");
   ReactDOM.render(<Interval />, rootElement);
   
-
-
-
-
-
-
-
-
-
-// const Interval = () => {
-//     return (
-//     <h1>
-//     <CountdownCircleTimer
-//       isPlaying 
-//       duration={30}
-//       colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-//       colorsTime={[30, 20, 10, 0]}
-//     >
-//       {({ remainingTime }) => remainingTime}
-      
-//     </CountdownCircleTimer>
-
-//     <button
-//         type="button"
-//         onClick={() => setColor("red")}
-//       >Start</button>
-//       <br />
-//         <button
-//         type="button"
-//         onClick={() => setColor("red")}
-//       >Stop</button>
-//     </h1>
-// )
-
-// }
-  
-
 
 export default Interval;
