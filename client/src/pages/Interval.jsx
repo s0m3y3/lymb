@@ -1,121 +1,132 @@
-import { Center } from '@chakra-ui/react'
-import React from "react";
-import { useState, useEffect } from "react";
-// import { useTimer } from 'use-timer';
+import React, { useState, useEffect } from "react";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import { Center, Button, Container, Stack, Select } from "@chakra-ui/react";
 
+const Interval = () => {
+  const [workoutTime, setWorkoutTime] = useState(5); // in seconds
+  const [restTime, setRestTime] = useState(2); // in seconds
+  const [sets, setSets] = useState(5);
+  const [currentSet, setCurrentSet] = useState(1);
+  const [timer, setTimer] = useState(workoutTime); // Initialize with workoutTime
+  const [isRunning, setIsRunning] = useState(false);
 
+  useEffect(() => {
+    let interval;
 
-import { CountdownCircleTimer } from 'react-countdown-circle-timer';
-import ReactDOM from "react-dom";
+    if (isRunning) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer > 1) {
+            return prevTimer - 1;
+          } else {
+            // Switch between workout and rest periods
+            if (currentSet % 2 === 0) {
+              // Rest period
+              setCurrentSet((prevSet) => prevSet + 1);
 
-const renderTime = ({ remainingTime }) => {
-    if (remainingTime === 0) {
-      return <div className="timer">FINISHED</div>;
+              if (currentSet < sets * 2) {
+                setTimer(workoutTime); // Switch to workoutTime
+              } else {
+                // All sets completed
+                setIsRunning(false);
+                setTimer(0); // Set timer to 0 to display "finished"
+              }
+            } else {
+              // Workout period
+              if (currentSet < sets * 2) {
+                setCurrentSet((prevSet) => prevSet + 1);
+                setTimer(restTime); // Switch to restTime
+              }
+            }
+            return prevTimer;
+          }
+        });
+      }, 1000);
+    } else {
+      clearInterval(interval);
     }
-    return (
-      <div className="timer">
-        <div className="text">Remaining</div>
-        <div className="value">{remainingTime}</div>
-        <div className="text">seconds</div>
-      </div>
-    );
+
+    return () => clearInterval(interval);
+  }, [isRunning, timer, currentSet, workoutTime, restTime, sets]);
+
+  const handleStartPause = () => {
+    setIsRunning((prevIsRunning) => !prevIsRunning);
   };
 
-function Interval() {
-    const [select, setSelect] = React.useState(60);
-    // const [start, setStart] = useState(false);
-    const [timer, setTimer] = React.useState(0);
-    const [check, setCheck] = useState(false);
- 
-    const SetlectReset = () => {
-        
-      let options = [10, 20, 30, 40, 50, 60]
-      return (
-        <div style={{ display: "flex" }}>
-          <select
-          
-            value={select}
-            onChange={(e) => setSelect(e.target.value)}
-            style={{
-              marginRight: "20px",
-              border: "bold",
-              fontSize: "25px"
-            }}
-          >
-            {options.map((opt) => (
-              <option value={opt} key={opt}>
-                {opt + " SEC"}
-              </option>
-            ))}
-          </select>
- 
-         {check ? (
-          <button onClick={()=>setCheck(prevCheck => !prevCheck)}
-          style={{
-            
-            marginLeft: "20px",
-            backgroundColor: "teal",
-            color: "white",
-            border: "none",
-            fontSize: "18px",
-            paddingLeft: "12px",
-            paddingRight: "12px",
-            paddingTop: "5px",
-            paddingBottom: "5px",
-            borderRadius: "6px"
-          }}
-          > Pause </button>
-         ) : (
-            <button onClick={()=>setCheck(prevCheck => !prevCheck)}
-            style={{
-            
-                marginLeft: "20px",
-                backgroundColor: "teal",
-                color: "white",
-                border: "none",
-                fontSize: "18px",
-                paddingLeft: "12px",
-                paddingRight: "12px",
-                paddingTop: "5px",
-                paddingBottom: "5px",
-                borderRadius: "6px"
-              }}> Play </button>
+  const handleReset = () => {
+    setIsRunning(false);
+    setCurrentSet(1);
+    setTimer(workoutTime); // Reset to workoutTime
+  };
 
-         ) 
-         
-         
-        }
-        </div>
-      );
-    };
-    
-    return (
+  const handleInputChange = (value, setter) => {
+    const parsedValue = parseInt(value);
+    if (!isNaN(parsedValue)) {
+      setter(parsedValue);
+    }
+  };
 
-   <Center>
-        <div className="timer-wrapper" >
-          <CountdownCircleTimer
-            key={timer}
-            isPlaying = {check}
-            duration={select}
-            
-            colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-            colorsTime={[60, 40, 20, 10]}
-            onComplete={() => [false, 1000]}
-          >
-            {renderTime}
-            
-          </CountdownCircleTimer>
-          <br />
-          <br />
-          <SetlectReset />
-        
-        </div>
-      </Center> 
-    );
-    
-  }
-  const rootElement = document.getElementById("root");
-  ReactDOM.render(<Interval />, rootElement);
-  
+  const handleSelectChange = (value) => {
+    setSets(parseInt(value));
+  };
+
+  return (
+    <Container>
+      <Center>
+        <Stack spacing={4}>
+          <div>
+            <label>
+              Workout Time (seconds):
+              <input
+                type="number"
+                value={workoutTime}
+                onChange={(e) => handleInputChange(e.target.value, setWorkoutTime)}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Rest Time (seconds):
+              <input
+                type="number"
+                value={restTime}
+                onChange={(e) => handleInputChange(e.target.value, setRestTime)}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Number of Sets:
+              <Select value={sets.toString()} onChange={(e) => handleSelectChange(e.target.value)}>
+                {[1, 2, 3, 4, 5].map((option) => (
+                  <option key={option} value={option.toString()}>
+                    {option}
+                  </option>
+                ))}
+              </Select>
+            </label>
+          </div>
+          <div>
+            <Button colorScheme="teal" variant="outline" onClick={handleStartPause}>
+              {isRunning ? "Pause" : "Start"}
+            </Button>
+            <Button colorScheme="teal" variant="outline" onClick={handleReset}>
+              Reset
+            </Button>
+          </div>
+          <div>
+            <h2>
+              {timer === 0 && currentSet > sets * 2
+                ? "Finished!"
+                : `Set ${Math.ceil(currentSet / 2)}: ${
+                    currentSet % 2 === 0 ? "Rest" : "Workout"
+                  } - ${timer}s`}
+            </h2>
+          </div>
+        </Stack>
+      </Center>
+    </Container>
+  );
+};
 
 export default Interval;
