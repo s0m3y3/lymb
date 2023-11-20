@@ -24,13 +24,18 @@ import stretchLogo from "../assets/stretch.png"
 import coreLogo from "../assets/core.png"
 import { useQuery } from '@apollo/client';
 import { QUERY_EXERCISE } from '../utils/queries.js'; // Import your mutations
+import React, {useState} from 'react';
 
 const Browse = () => {
   //todo: Figure out this query exercise. It does not work. 
-  const data  = useQuery(QUERY_EXERCISE);
+  const [data, setCount]  = useState(useQuery(QUERY_EXERCISE));
   const exercises = data?.exercises || [];
   console.log(data)
   console.log(exercises)
+
+  const [show, setShow] = React.useState(false);
+  const handleToggle = () => setShow(!show);
+
 
   return (
     <Container maxW="100%">
@@ -48,7 +53,15 @@ const Browse = () => {
           </InputRightAddon>
         </InputGroup>
       </Box>
-
+      <>
+  <Button variantColor="blue" onClick={handleToggle}>
+    Toggle
+  </Button>
+  <Collapse mt={4} isOpen={show}>
+    {/* Add content to display inside the Collapse */}
+    <p>Some collapsible content...</p>
+  </Collapse>
+</>
       <Box my={10} display="flex" flexDirection={'column'}>
         <Heading mb={5} alignSelf='center' fontFamily={theme.fonts.heading} as="h2" size="md">
           Browse by Type
@@ -65,6 +78,7 @@ const Browse = () => {
                 </Heading>
             </CardHeader>
             <CardBody>
+              Strength
             </CardBody>
           </Card>
 
@@ -79,6 +93,7 @@ const Browse = () => {
               </Heading>
             </CardHeader>
             <CardBody>
+              Cardio
             </CardBody>
           </Card>
 
