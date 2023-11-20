@@ -3,11 +3,15 @@ import React, { useState, useEffect } from "react";
 import { Center, Button, Container, Stack, Select } from "@chakra-ui/react";
 
 const Interval = () => {
-  const [workoutTime, setWorkoutTime] = useState(5); // in seconds
-  const [restTime, setRestTime] = useState(2); // in seconds
+  const [workoutTimeOptions] = useState([5, 30, 60, 90, 120]);
+  const [restTimeOptions] = useState([3, 5, 7, 9, 11]);
+  const [selectedWorkoutTime, setSelectedWorkoutTime] = useState(workoutTimeOptions[0]);
+  const [selectedRestTime, setSelectedRestTime] = useState(restTimeOptions[0]);
+  const [workoutTime, setWorkoutTime] = useState(selectedWorkoutTime);
+  const [restTime, setRestTime] = useState(selectedRestTime);
   const [sets, setSets] = useState(5);
   const [currentSet, setCurrentSet] = useState(1);
-  const [timer, setTimer] = useState(workoutTime); // Initialize with workoutTime
+  const [timer, setTimer] = useState(workoutTime);
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
@@ -19,23 +23,19 @@ const Interval = () => {
           if (prevTimer > 1) {
             return prevTimer - 1;
           } else {
-            // Switch between workout and rest periods
             if (currentSet % 2 === 0) {
-              // Rest period
               setCurrentSet((prevSet) => prevSet + 1);
 
               if (currentSet < sets * 2) {
-                setTimer(workoutTime); // Switch to workoutTime
+                setTimer(workoutTime);
               } else {
-                // All sets completed
                 setIsRunning(false);
-                setTimer(0); // Set timer to 0 to display "finished"
+                setTimer(0);
               }
             } else {
-              // Workout period
               if (currentSet < sets * 2) {
                 setCurrentSet((prevSet) => prevSet + 1);
-                setTimer(restTime); // Switch to restTime
+                setTimer(restTime);
               }
             }
             return prevTimer;
@@ -50,24 +50,33 @@ const Interval = () => {
   }, [isRunning, timer, currentSet, workoutTime, restTime, sets]);
 
   const handleStartPause = () => {
+    if (!isRunning) {
+      setWorkoutTime(selectedWorkoutTime);
+      setRestTime(selectedRestTime);
+      setCurrentSet(1);
+      setTimer(selectedWorkoutTime);
+    }
     setIsRunning((prevIsRunning) => !prevIsRunning);
   };
 
   const handleReset = () => {
     setIsRunning(false);
     setCurrentSet(1);
-    setTimer(workoutTime); // Reset to workoutTime
+    setTimer(selectedWorkoutTime);
   };
 
-  const handleInputChange = (value, setter) => {
+  const handleInputChange = (value, setter, setSelectedSetter) => {
     const parsedValue = parseInt(value);
     if (!isNaN(parsedValue)) {
-      setter(parsedValue);
+      setSelectedSetter(parsedValue);
     }
   };
 
-  const handleSelectChange = (value) => {
-    setSets(parseInt(value));
+  const handleSelectChange = (value, setter, setSelectedSetter) => {
+    const parsedValue = parseInt(value);
+    if (!isNaN(parsedValue)) {
+      setSelectedSetter(parsedValue);
+    }
   };
 
   return (
@@ -77,27 +86,33 @@ const Interval = () => {
           <div>
             <label>
               Workout Time (seconds):
-              <input
-                type="number"
-                value={workoutTime}
-                onChange={(e) => handleInputChange(e.target.value, setWorkoutTime)}
-              />
+              <Select value={selectedWorkoutTime.toString()} onChange={(e) => handleSelectChange(e.target.value, setWorkoutTime, setSelectedWorkoutTime)}>
+                {workoutTimeOptions.map((option) => (
+                  <option key={option} value={option.toString()}>
+                    {option}
+                  </option>
+                ))}
+              </Select>
             </label>
+            <p>Selected Workout Time: {selectedWorkoutTime}s</p>
           </div>
           <div>
             <label>
               Rest Time (seconds):
-              <input
-                type="number"
-                value={restTime}
-                onChange={(e) => handleInputChange(e.target.value, setRestTime)}
-              />
+              <Select value={selectedRestTime.toString()} onChange={(e) => handleSelectChange(e.target.value, setRestTime, setSelectedRestTime)}>
+                {restTimeOptions.map((option) => (
+                  <option key={option} value={option.toString()}>
+                    {option}
+                  </option>
+                ))}
+              </Select>
             </label>
+            <p>Selected Rest Time: {selectedRestTime}s</p>
           </div>
           <div>
             <label>
               Number of Sets:
-              <Select value={sets.toString()} onChange={(e) => handleSelectChange(e.target.value)}>
+              <Select value={sets.toString()} onChange={(e) => handleSelectChange(e.target.value, setSets, setSets)}>
                 {[1, 2, 3, 4, 5].map((option) => (
                   <option key={option} value={option.toString()}>
                     {option}
@@ -126,7 +141,6 @@ const Interval = () => {
         </Stack>
       </Center>
     </Container>
-
   );
 };
 
