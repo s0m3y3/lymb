@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
+
 import { Center, Button, Container, Stack, Select } from "@chakra-ui/react";
 
 const Interval = () => {
@@ -126,6 +126,7 @@ const Interval = () => {
         </Stack>
       </Center>
     </Container>
+
   );
 };
 
