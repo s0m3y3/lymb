@@ -16,7 +16,7 @@ connection.on('error', (err) => {
 connection.once('open', async () => {
   try {
     //drops exercise data
-    let exerciseCheck = await connection.db.listCollections({ name: 'exercise' }).toArray();
+    let exerciseCheck = await connection.db.listCollections({ name: 'exercises' }).toArray();
     // console.log(exerciseCheck)
     if (exerciseCheck.length) {
       await connection.dropCollection('exercise');
@@ -27,7 +27,7 @@ connection.once('open', async () => {
     console.log('Exercises seeded.');
 
     //drops workout data
-    let workoutCheck = await connection.db.listCollections({ name: 'workout' }).toArray();
+    let workoutCheck = await connection.db.listCollections({ name: 'workouts' }).toArray();
     if (workoutCheck.length) {
       await connection.dropCollection('workout');
       console.log('Workout db dropped.');
@@ -71,10 +71,23 @@ connection.once('open', async () => {
 
     //Grabs workout from database - needed for _ID. 
     const databaseWorkout = await Workout.find();
+    const databaseExercise = await Exercise.find();
 
-    //function that randomly returns, 0-3 workout
-    async function getRandomWorkoutIDs() {
+    //function that randomly returns, 0-3 exercise
+    async function getRandomExerciseIDs() {
       //random number generator, 0-3
+      //TODO: grab random exercise from all
+      const numExercises = Math.floor(Math.random() * 4 +1);
+      //grabs workout.
+      const setExercise = databaseExercise.slice(0, numExercises);
+      //pulls only Exercise ID. 
+      const setExerciseID = setExercise.map((exercise) => exercise._id);
+      return setExerciseID;
+    }
+
+    //function that randomly returns, 1-3 workout
+    async function getRandomWorkoutIDs() {
+      //random number generator, 1-3
       const numWorkouts = Math.floor(Math.random() * 4);
       //grabs workout.
       const setWorkout = databaseWorkout.slice(0, numWorkouts);
@@ -83,6 +96,19 @@ connection.once('open', async () => {
       return setWorkoutID;
     }
 
+    const insertExercises = await Promise.all(
+      workoutData.map(async (workout) => {
+        setExercise = await getRandomExerciseIDs();
+        return{
+          name: workout.name,
+          description: workout.description,
+          exercises: setExercise
+        }
+      })
+    )
+    await Workout.collection.insertMany(insertExercises)
+
+    
     //to hash the password in userdata
     const hashedUsers = await Promise.all(
       userData.map(async (user) => {
@@ -99,6 +125,7 @@ connection.once('open', async () => {
       })
     );
     //send hashedUser to database.
+  
     await User.collection.insertMany(hashedUsers);   
     // console.log('Users seeded.');
 
