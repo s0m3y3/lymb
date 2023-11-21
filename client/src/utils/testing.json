@@ -1,86 +1,100 @@
 [
     {
+        "id": "01",
         "name": "Jumping jack",
         "description": "A calisthenics exercise that involves jumping and moving arms and legs outward.",
         "type": "Cardio",
         "target": "Whole body"
     },
     {
+        "id": "02",
         "name": "Jump rope",
         "description": "Skipping rope exercise that improves cardiovascular health and coordination.",
         "type": "Cardio",
-        "target": "Legs, Arms, Shoulders"
+        "target": "Legs, Arms,  Shoulders"
     },
     {
+        "id": "03",
         "name": "Push up",
         "description": "An exercise that targets the chest, shoulders, and triceps.",
         "type": "Strength",
         "target": "Chest, Shoulders, Triceps"
     },
     {
+        "id": "04",
         "name": "High knee",
         "description": "A cardio exercise involving bringing knees up towards the chest alternately.",
         "type": "Cardio",
         "target": "Legs, Core"
     },
     {
+        "id": "05",
         "name": "Burpees",
         "description": "A full-body exercise involving squatting, jumping, and a push-up.",
         "type": "Cardio, Strength",
         "target": "Whole body"
     },
     {
+        "id": "06",
         "name": "Squats",
         "description": "A lower-body exercise that targets the quadriceps, hamstrings, and glutes.",
         "type": "Strength",
         "target": "Legs, Glutes"
     },
     {
+        "id": "07",
         "name": "Jump squats",
         "description": "Squatting exercise with an explosive jump at the top, targeting legs and glutes.",
         "type": "Cardio, Strength",
         "target": "Legs, Glutes"
     },
     {
+        "id": "08",
         "name": "Plank",
         "description": "An isometric exercise that engages the core muscles to maintain a position similar to a push-up.",
         "type": "Core",
         "target": "Core, Shoulders"
     },
     {
+        "id": "09",
         "name": "Mountain Climbers",
         "description": "A dynamic exercise that mimics climbing, engaging the core, arms, and legs from a planking position.",
         "type": "Cardio, Core",
         "target": "Core, Arms, Legs"
     },
     {
+        "id": "10",
         "name": "Butterfly Stretch",
         "description": "A stretch that opens up the hips and stretches the inner thighs, groin, and lower back.",
         "type": "Stretch",
         "target": "Hips, Inner Thighs, Groin, Lower Back"
     },
     {
+        "id": "11",
         "name": "Forward Fold",
         "description": "A standing stretch that targets the hamstrings and lower back, promoting flexibility.",
         "type": "Stretch",
         "target": "Hamstrings, Lower Back"
     },
     {
+        "id": "12",
         "name": "Spinal Twist",
         "description": "A seated or lying stretch that releases tension in the spine and increases flexibility.",
         "type": "Stretch",
         "target": "Spine, Torso"
     },
     {
+        "id": "13",
         "name": "Lunge Stretch",
         "description": "A stretch that targets the hip flexors and quadriceps while improving balance and flexibility.",
         "type": "Stretch",
         "target": "Hip Flexors, Quadriceps"
     },
     {
+        "id": "14",
         "name": "Child's Pose",
         "description": "A resting yoga pose that stretches the spine, hips, thighs, and ankles, promoting relaxation.",
-        "type": "Stretch",
+        "type": "Stretch, Yoga",
         "target": "Spine, Hips, Thighs, Ankles"
     }
 ]

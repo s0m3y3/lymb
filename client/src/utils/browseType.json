@@ -1,0 +1,18 @@
+[
+    {
+        "type":"Strength",
+        "image":"strengthLogo"
+    },
+    {
+        "type":"Cardio",
+        "image":"cardioLogo"
+    },
+    {
+        "type":"Core",
+        "image":"coreLogo"
+    },
+    {
+        "type":"Stretch",
+        "image":"stretchLogo"
+    }
+]
