@@ -9,6 +9,10 @@ export const QUERY_ME = gql`
       workouts {
         _id
         name
+        exercises {
+          _id
+          name
+        }
       }
     }
   }
