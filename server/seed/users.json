@@ -3,7 +3,7 @@
     "username": "Test1",
     "email": "Test1@gmail.com",
     "_comment":"Password123!",
-    "password": "$2b$10$x9ghiYEv3Wfi60v4Xmh2H.wAvfONH35h0ulPkOrmWwMh4EawuBiT2"
+    "password": "Password123!"
   },
   {
     "username": "Test2",

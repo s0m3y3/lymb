@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const QUERY_ME = gql`
   {
@@ -6,9 +6,13 @@ export const QUERY_ME = gql`
       _id
       username
       email
+      workouts {
+        _id
+        name
+      }
     }
-}
-`
+  }
+`;
 export const QUERY_EXERCISE = gql`
   {
     exercises {
@@ -18,8 +22,8 @@ export const QUERY_EXERCISE = gql`
       description: String
       target: String
     }
-}
-`
+  }
+`;
 
 export const QUERY_WORKOUT = gql`
   {
@@ -30,5 +34,5 @@ export const QUERY_WORKOUT = gql`
       description: String
       target: String
     }
-}
-`
+  }
+`;

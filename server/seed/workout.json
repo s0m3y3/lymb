@@ -1,41 +1,17 @@
 [
     {
-        "workoutName": "Cardio Rodeo!",
+        "name": "Cardio Rodeo!",
         "description": "A high-intensity cardio workout to boost your heart rate.",
-        "exercises": [
-            {
-                "name": "Jumping jack"
-            },
-            {
-                "name": "High knee"
-            },
-            {
-                "name": "Mountain climbers"
-            }
-        ]
+        "exercises": []
     },
     {
-        "workoutName": "Strength Builder, no Equipments",
+        "name": "Strength Builder, no Equipments",
         "description": "A workout focused on building strength and muscle.",
-        "exercises": [
-            {
-                "name": "Push up"
-            },
-            {
-                "name": "Squats"
-            }
-        ]
+        "exercises": []
     },
     {
-        "workoutName": "Leg Day - Squatter!",
+        "name": "Leg Day - Squatter!",
         "description": "An intense workout focusing on the lower body.",
-        "exercises": [
-            {
-                "name": "Squats"
-            },
-            {
-                "name": "Jump squats"
-            }
-        ]
+        "exercises": []
     }
 ]
