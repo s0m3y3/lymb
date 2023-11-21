@@ -20,7 +20,7 @@ import theme from "../components/theme";
 import "@fontsource-variable/lexend-peta";
 import { useQuery } from '@apollo/client';
 import { QUERY_EXERCISE } from '../utils/queries.js'; // Import your mutations
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import exerciseDataJson from '../utils/testing.json'; //testing purpose ONLY -> WILL need to replace this import with actual query.
 import typeData from '../utils/browseType.json'; //Used for "Browse by Type" section for name & image source. 
 
