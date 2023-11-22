@@ -23,14 +23,14 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { useState } from "react";
-import { SortableExercises } from "../components/EditWorkout";
-//allow queries 
+import { SortableExercise } from "../components/SortableExercise";
+//allow queries
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 
 const Dashboard = () => {
-  const [exercises, setExercises] = useState(["Exercise 1", "Exercise 2", "Exercise 3"]);
+  const [exercises, setExercises] = useState(["Jump", "Crunch", "Run"]);
   //load in queried logged in user data
   const { loading, data } = useQuery(QUERY_ME);
   const userData = data?.me || {};
@@ -39,8 +39,6 @@ const Dashboard = () => {
   if (loading) {
     return <h2>Loading...</h2>;
   }
-
-  
 
   return (
     <Wrap justify={"space-evenly"} py={10}>
@@ -61,74 +59,86 @@ const Dashboard = () => {
           My Workouts
         </Heading>
         {workouts.map((item) => (
-        <Card w="95%" key={item._id}>
-          <CardHeader>
-            <Heading as="h3" size="md" color={theme.colors.darkCyan}>
-            {item.name}
-            </Heading>
-          </CardHeader>
-          <CardBody>
-          {item.exercises.map((item2) => (
-            <div key={item2._id}>{item2.name}</div>
-          ))}
-          </CardBody>
-          <CardFooter display="flex" justify="space-between">
-            <Button
-              bg={theme.colors.darkCyan}
-              color={theme.colors.antiFlashWhite}
-            >
-              Edit
-            </Button>
-            <Button
-              bg={theme.colors.carmine}
-              color={theme.colors.antiFlashWhite}
-            >
-              Delete
-            </Button>
-          </CardFooter>
-        </Card>))}
+          <Card w="95%" key={item._id}>
+            <CardHeader>
+              <Heading as="h3" size="md" color={theme.colors.darkCyan}>
+                {item.name}
+              </Heading>
+            </CardHeader>
+            <CardBody>
+              {item.exercises.map((item2) => (
+                <div key={item2._id}>{item2.name}</div>
+              ))}
+            </CardBody>
+            <CardFooter display="flex" justify="space-between">
+              <Button
+                bg={theme.colors.darkCyan}
+                color={theme.colors.antiFlashWhite}
+              >
+                Edit
+              </Button>
+              <Button
+                bg={theme.colors.carmine}
+                color={theme.colors.antiFlashWhite}
+              >
+                Delete
+              </Button>
+            </CardFooter>
+          </Card>
+        ))}
 
         <Button>Create Workout</Button>
       </VStack>
-      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <Box as={"aside"} bg={theme.colors.timberwolf} minW="30%" h="100%" alignContent={'center'}>
-          <Heading>Workout Name</Heading>
-          <Button
-            bg={theme.colors.darkCyan}
-            color={theme.colors.antiFlashWhite}
-          >
-            Add Exercises
-          </Button>
+      <Box
+        as={"aside"}
+        bg={theme.colors.timberwolf}
+        minW="30%"
+        h="100%"
+        alignContent={"center"}
+      >
+        <Heading>Workout Name</Heading>
+        <Button bg={theme.colors.darkCyan} color={theme.colors.antiFlashWhite}>
+          Add Exercises
+        </Button>
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
           <SortableContext
             items={exercises}
             strategy={verticalListSortingStrategy}
           >
             {exercises.map((exercise) => (
-              <SortableExercises key={exercise} id={exercise} />
+              <SortableExercise key={exercise} id={exercise} />
             ))}
           </SortableContext>
-        </Box>
-      </DndContext>
-
+        </DndContext>
+      </Box>
     </Wrap>
   );
   function handleDragEnd(event) {
+    console.log("Drag end called");
     const { active, over } = event;
-
+    console.log("ACTIVE: " + active.id);
+    console.log("OVER: " + over.id);
     if (active.id !== over.id) {
       setExercises((items) => {
         const activeIndex = items.indexOf(active.id);
         const overIndex = items.indexOf(over.id);
 
-        arrayMove(items, activeIndex, overIndex);
+        return arrayMove(items, activeIndex, overIndex);
       });
     }
   }
 };
 
 export default Dashboard;
-  {/* Code for a recent exercises feature that would be a future development */}
-  {/* <VStack
+
+{
+  /* Code for a recent exercises feature that would be a future development */
+}
+{
+  /* <VStack
     py="10px"
     borderWidth="1px"
     borderRadius="lg"
@@ -169,4 +179,5 @@ export default Dashboard;
       <CardBody></CardBody>
       <CardFooter></CardFooter>
     </Card>
-  </VStack> */}
+  </VStack> */
+}

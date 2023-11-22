@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Divider, Text, Button, Box } from "@chakra-ui/react";
+import { Divider, Text, Card, Button, Box, CardBody } from "@chakra-ui/react";
 import theme from "./theme";
 {
   /* <Divider orientation="horizontal"></Divider>
@@ -15,7 +15,7 @@ import theme from "./theme";
 </Button> */
 }
 
-export function SortableExercises(props) {
+export function SortableExercise(props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
 
@@ -25,9 +25,12 @@ export function SortableExercises(props) {
   };
 
   return (
-    <Box ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Divider orientation="horizontal"></Divider>
-      <Text>{props.id}</Text>
-    </Box>
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <Card m={3}>
+        <CardBody>
+          <Text>{props.id}</Text>
+        </CardBody>
+      </Card>
+    </div>
   );
 }
