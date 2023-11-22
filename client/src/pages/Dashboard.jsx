@@ -90,54 +90,7 @@ const Dashboard = () => {
             </Button>
           </CardFooter>
         </Card>))}
-        <Card w="95%">
-          <CardHeader>
-            <Heading as="h3" size="md" color={theme.colors.darkCyan}>
-              Full Body
-            </Heading>
-          </CardHeader>
-          <CardBody>
-            I'm typing stuff in here to test some spacing issues
-          </CardBody>
-          <CardFooter display="flex" justify="space-between">
-            <Button
-              bg={theme.colors.darkCyan}
-              color={theme.colors.antiFlashWhite}
-            >
-              Edit
-            </Button>
-            <Button
-              bg={theme.colors.carmine}
-              color={theme.colors.antiFlashWhite}
-            >
-              Delete
-            </Button>
-          </CardFooter>
-        </Card>
-        <Card w="95%">
-          <CardHeader>
-            <Heading as="h3" size="md" color={theme.colors.darkCyan}>
-              Full Body
-            </Heading>
-          </CardHeader>
-          <CardBody>
-            I'm typing stuff in here to test some spacing issues
-          </CardBody>
-          <CardFooter display="flex" justify="space-between">
-            <Button
-              bg={theme.colors.darkCyan}
-              color={theme.colors.antiFlashWhite}
-            >
-              Edit
-            </Button>
-            <Button
-              bg={theme.colors.carmine}
-              color={theme.colors.antiFlashWhite}
-            >
-              Delete
-            </Button>
-          </CardFooter>
-        </Card>
+
         <Button>Create Workout</Button>
       </VStack>
       <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
