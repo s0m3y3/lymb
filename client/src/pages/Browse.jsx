@@ -168,6 +168,7 @@ const Browse = () => {
                 Type: {exercise.type}
                 <br />
                 Targets: {exercise.target}</CardBody>
+                <Button>Click to add</Button>
             </Card>
             ))}
         </SimpleGrid>
