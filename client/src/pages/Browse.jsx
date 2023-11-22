@@ -19,7 +19,7 @@ import {
 import theme from "../components/theme";
 import "@fontsource-variable/lexend-peta";
 import { useQuery } from '@apollo/client';
-import { QUERY_EXERCISE } from '../utils/queries.js'; // Import your mutations
+import { QUERY_EXERCISE, QUERY_ME } from '../utils/queries.js'; // Import your mutations
 import React, {useEffect, useState} from 'react';
 import exerciseDataJson from '../utils/testing.json'; //testing purpose ONLY -> WILL need to replace this import with actual query.
 import typeData from '../utils/browseType.json'; //Used for "Browse by Type" section for name & image source. 
@@ -32,9 +32,15 @@ import coreLogo from "../assets/core.png"
 
 const Browse = () => {
   //TODO: Figure out this query exercise. It does not work. Once work, then replace "exerciseDataJson"
-  const [data, setData]  = useState(useQuery(QUERY_EXERCISE));
-  const exercises = data?.exercises || [];
-  // console.log(data)
+  // const { data, loading, error } = useQuery(QUERY_EXERCISE);
+  // const exercises = data?.exercises || {};
+
+  //Example of WORKOUT that works. It just need authorization on server side. 
+  // const { loading, data } = useQuery(QUERY_ME);
+  // const userData = data?.me || {};
+
+  // console.log("hi")
+  // console.log(userData)
   // console.log(exercises)
 
 // This is for collapse toggle. Currently does not work. 
@@ -82,7 +88,7 @@ const Browse = () => {
 
   return (
     <Container maxW="100%">
-      <Box my={10}>
+      {/* <Box my={10}>
         <InputGroup>
           <InputLeftAddon fontFamily={theme.fonts.heading} as="h2" size="md">
             Search Exercises
@@ -97,11 +103,11 @@ const Browse = () => {
             <Button>Search</Button>
           </InputRightAddon>
         </InputGroup>
-      </Box>
+      </Box> */}
 
 {/* collapse bar in testing... not there yet. */}
     <>
-      <Button variantColor="blue" onClick={handleToggle}>
+      <Button onClick={handleToggle}>
         Toggle
       </Button>
       <Collapse mt={4} isOpen={show}>

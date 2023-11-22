@@ -82,5 +82,29 @@
         "description": "A resting yoga pose that stretches the spine, hips, thighs, and ankles, promoting relaxation.",
         "type": "Stretch",
         "target": "Spine, Hips, Thighs, Ankles"
+    }, 
+    {
+        "name": "Russian Twists",
+        "description": "In a sitting position, involving twisting motions from side to side, while holding a weight or without any equipment.",
+        "type": "Core",
+        "target": "Obliques, Core"
+    },
+    {
+        "name": "Leg Raises",
+        "description": "Performed by lying flat on the back and raising both legs upwards.",
+        "type": "Core",
+        "target": "Lower Abs, Core"
+    },
+    {
+        "name": "Bicycle Crunches",
+        "description": "An exercise involving rotational movements where the elbow meets the opposite knee while lying on the back.",
+        "type": "Core",
+        "target": "Core, Obliques"
+    },
+    {
+        "name": "Lunges",
+        "description": "A unilateral lower-body exercise that involves stepping forward or backward and bending the knees.",
+        "type": "Strength",
+        "target": "Quadriceps, Hamstrings, Glutes, Calves"
     }
 ]
