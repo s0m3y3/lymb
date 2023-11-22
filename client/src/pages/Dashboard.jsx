@@ -30,21 +30,18 @@ import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 
 const Dashboard = () => {
+  const [exercises, setExercises] = useState(["Exercise 1", "Exercise 2", "Exercise 3"]);
   //load in queried logged in user data
   const { loading, data } = useQuery(QUERY_ME);
   const userData = data?.me || {};
-
+  // Ensure it's an array
+  const workouts = userData.workouts || [];
   if (loading) {
     return <h2>Loading...</h2>;
   }
-  // Ensure it's an array
-  const workouts = userData.workouts || [];
 
-  const [exercises, setExercises] = useState([
-    "Exercise 1",
-    "Exercise 2 ",
-    "Exercise 3",
-  ]);
+  
+
   return (
     <Wrap justify={"space-evenly"} py={10}>
       <VStack
