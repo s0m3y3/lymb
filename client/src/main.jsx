@@ -10,6 +10,7 @@ import Navbar from "./components/Navtab.jsx";
 import Interval from "./pages/Interval.jsx"
 import Signup from "./pages/Signup.jsx";
 import DashLite from "./pages/DashLite.jsx";
+import Intlite from "./pages/IntLite.jsx";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/interval",
         element: <Interval />,
+      },
+      {
+        path: "/intLite",
+        element: <Intlite />,
       },
     ],
   },
