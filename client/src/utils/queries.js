@@ -11,7 +11,10 @@ export const QUERY_ME = gql`
         name
         exercises {
           _id
+          description
           name
+          type
+
         }
       }
     }
