@@ -11,10 +11,33 @@ import {
 import theme from "../components/theme";
 import "@fontsource-variable/lexend-peta";
 
+
+import { useQuery, useMutation } from "@apollo/client";
+import { QUERY_ME } from "../utils/queries";
+// import { REMOVE_WORKOUT } from '../utils/mutations';
+// import { removeWorkoutId } from '../utils/localStorage';
+
+import Auth from "../utils/auth";
+
+
 const Dashboard = () => {
+//load in logged in user data:
+const { loading, data } = useQuery(QUERY_ME);
+const userData = data?.me || {};
+
+if (loading) {
+  return <h2>Loading...</h2>;
+}
+
+// Ensure it's an array
+const workouts = userData.workouts || [];
+console.log(workouts)
+
+
   return (
     <Wrap justify={"space-evenly"}>
       <VStack
+        marginY="10px"
         py="10px"
         borderWidth="1px"
         borderRadius="lg"
@@ -30,37 +53,21 @@ const Dashboard = () => {
         >
           My Workouts
         </Heading>
-        <Card w="95%">
+        {workouts.map((item) => (
+        <Card w="95%" key={item._id}>
           <CardHeader>
             <Heading as="h3" size="md" color={theme.colors.darkCyan}>
-              Full Body
+            {item.name}
             </Heading>
           </CardHeader>
           <CardBody>
-            I'm typing stuff in here to test some spacing issues
-          </CardBody>
+          {item.exercises.map((item2) => (
+            <div key={item2._id}>{item2.name}</div>
+          ))}       </CardBody>
           <CardFooter></CardFooter>
-        </Card>
-        <Card w="95%">
-          <CardHeader>
-            <Heading as="h3" size="md" color={theme.colors.darkCyan}>
-              Full Body
-            </Heading>
-          </CardHeader>
-          <CardBody></CardBody>
-          <CardFooter></CardFooter>
-        </Card>
-        <Card w="95%">
-          <CardHeader>
-            <Heading as="h3" size="md" color={theme.colors.darkCyan}>
-              Full Body
-            </Heading>
-          </CardHeader>
-          <CardBody></CardBody>
-          <CardFooter></CardFooter>
-        </Card>
+        </Card>))}
       </VStack>
-      <VStack
+      {/* <VStack
         py="10px"
         borderWidth="1px"
         borderRadius="lg"
@@ -101,7 +108,7 @@ const Dashboard = () => {
           <CardBody></CardBody>
           <CardFooter></CardFooter>
         </Card>
-      </VStack>
+      </VStack> */}
     </Wrap>
   );
 };
