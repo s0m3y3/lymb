@@ -72,15 +72,14 @@ const Dashboard = () => {
             </CardBody>
             <CardFooter display="flex" justify="space-between">
               <Button
-                key={item._id}
+                
                 bg={theme.colors.darkCyan}
                 color={theme.colors.antiFlashWhite}
-                onClick={()=>setExercises(    
-                  item.exercises.map((item2) => (
-                  <div key={item2._id}>{item2.name}</div>
-                ))
-              
-                )}
+                onClick={() =>
+                  setExercises(
+                    item.exercises.map((item2) => (item2.name))
+                  )
+                }
               >
                 Edit
               </Button>
