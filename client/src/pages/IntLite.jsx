@@ -6,6 +6,7 @@ import { QUERY_EXERCISE, QUERY_ME } from "../utils/queries.js"; // Import your m
 import { useQuery } from "@apollo/client";
 
 const ExerciseInterval = () => {
+  
   //This query now works. Just need to incorporate it into Browser REACT
   const { loading, error, data: exerciseQuery } = useQuery(QUERY_EXERCISE);
   // if (loading) {return <h2>Loading...</h2>;}
