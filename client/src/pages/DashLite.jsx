@@ -35,10 +35,10 @@ console.log(workouts)
       <div>Email: {userData.email}</div>
       <div>_id: {userData._id}</div>
       {/* <div>exercise: {workouts[0].exercises[0].name}</div> */}
-      {workouts.map((item) => (
+      {workouts?.map((item) => (
         <div key={item._id}>
           {item.name}
-          {item.exercises.map((item2) => (
+          {item.exercises?.map((item2) => (
             <div key={item2._id}>{item2.name}</div>
           ))}
         </div>
