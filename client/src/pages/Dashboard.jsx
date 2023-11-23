@@ -91,7 +91,7 @@ console.log(workouts)
                 Delete
               </Button>
               <Button 
-              as={Link} to={`/workout/${item._id}`}
+              as={Link} to={`/intLite/${item._id}`}
               bg={theme.colors.carmine}
               color={theme.colors.antiFlashWhite} >
                 Start 
