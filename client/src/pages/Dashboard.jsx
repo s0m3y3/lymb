@@ -11,7 +11,7 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-
+import { Link } from "react-router-dom";
 import theme from "../components/theme";
 import "@fontsource-variable/lexend-peta";
 
@@ -89,6 +89,12 @@ console.log(workouts)
                 color={theme.colors.antiFlashWhite}
               >
                 Delete
+              </Button>
+              <Button 
+              as={Link} to={`/workout/${item._id}`}
+              bg={theme.colors.carmine}
+              color={theme.colors.antiFlashWhite} >
+                Start 
               </Button>
             </CardFooter>
           </Card>

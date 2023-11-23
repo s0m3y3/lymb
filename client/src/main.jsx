@@ -55,7 +55,7 @@ const router = createBrowserRouter([
       },
       {
         // messin
-        path: "Workout/:workoutId",
+        path: "workout/:workoutId",
         element: <Paramlite />,
       },
     ],
