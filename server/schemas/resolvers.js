@@ -8,12 +8,13 @@ const resolvers = {
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id }).select(
-          "-__v -password"
-        ).populate('workouts').populate({
-          path: 'workouts',
-          populate: 'exercises'
-        });
+        const userData = await User.findOne({ _id: context.user._id })
+          .select("-__v -password")
+          .populate("workouts")
+          .populate({
+            path: "workouts",
+            populate: "exercises",
+          });
 
         return userData;
       }
@@ -27,7 +28,7 @@ const resolvers = {
     },
     //fetch all workout.
     workouts: async () => {
-      const workouts = (await Workout.find({})).populate('exercises');
+      const workouts = (await Workout.find({})).populate("exercises");
       return workouts;
     },
   },
@@ -56,6 +57,44 @@ const resolvers = {
 
       const token = signToken(user);
       return { token, user };
+    },
+    createWorkout: async (parent, { input }, context) => {
+      if (context.user) {
+        console.log(input);
+        const workout = await Workout.create(input);
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { workouts: workout._id } },
+          { new: true }
+        );
+        return workout;
+      }
+      throw AuthenticationError;
+    },
+    deleteWorkout: async (parent, { workoutId }, context) => {
+      if (context.user) {
+        const workout = await Workout.findOneAndDelete({
+          _id: workoutId,
+        });
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { workouts: workout._id } },
+          { new: true }
+        );
+        return workout;
+      }
+      throw AuthenticationError;
+    },
+    updateWorkout: async (parent, { input }, context) => {
+      if (context.user) {
+        const updatedWorkout = await Workout.findOneAndUpdate(
+          { _id: input._id },
+          { $set: { exercises: input.exercises } },
+          { new: true }
+          );
+          return updatedWorkout;
+      }
+      throw AuthenticationError;
     },
   },
 };
