@@ -50,7 +50,7 @@ const router = createBrowserRouter([
         element: <Interval />,
       },
       {
-        path: "/intLite",
+        path: "/intLite/:workoutId",
         element: <Intlite />,
       },
       {
