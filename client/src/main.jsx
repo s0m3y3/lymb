@@ -12,6 +12,9 @@ import Signup from "./pages/Signup.jsx";
 import DashLite from "./pages/DashLite.jsx";
 import Intlite from "./pages/IntLite.jsx";
 
+// messing around browse2practice
+
+
 const router = createBrowserRouter([
   {
     path: "/",
