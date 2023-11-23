@@ -28,10 +28,15 @@ const resolvers = {
     },
     //fetch all workout.
     workouts: async () => {
-      const workouts = (await Workout.find({})).populate("exercises");
+      const workouts = await Workout.find({}).populate("exercises");
       return workouts;
     },
+    workout: async (parent, { _id }) => {
+      const workout = await Workout.findOne({ _id: _id }).populate("exercises");
+      return workout;
+    }
   },
+
 
   Mutation: {
     addUser: async (parent, args) => {
