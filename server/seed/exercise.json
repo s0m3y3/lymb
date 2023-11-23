@@ -1,24 +1,24 @@
 [
     {
-        "name": "Jumping jack",
+        "name": "Jumping Jack",
         "description": "A calisthenics exercise that involves jumping and moving arms and legs outward.",
         "type": "Cardio",
         "target": "Whole body"
     },
     {
-        "name": "Jump rope",
+        "name": "Jump Rope",
         "description": "Skipping rope exercise that improves cardiovascular health and coordination.",
         "type": "Cardio",
         "target": "Legs, Arms, Shoulders"
     },
     {
-        "name": "Push up",
+        "name": "Push Up",
         "description": "An exercise that targets the chest, shoulders, and triceps.",
         "type": "Strength",
         "target": "Chest, Shoulders, Triceps"
     },
     {
-        "name": "High knee",
+        "name": "High Knee",
         "description": "A cardio exercise involving bringing knees up towards the chest alternately.",
         "type": "Cardio",
         "target": "Legs, Core"
@@ -36,7 +36,7 @@
         "target": "Legs, Glutes"
     },
     {
-        "name": "Jump squats",
+        "name": "Jump Squats",
         "description": "Squatting exercise with an explosive jump at the top, targeting legs and glutes.",
         "type": "Cardio, Strength",
         "target": "Legs, Glutes"

@@ -19,7 +19,7 @@ import {
 import theme from "../components/theme";
 import "@fontsource-variable/lexend-peta"; //font theme. 
 import { useQuery } from '@apollo/client';
-import { QUERY_EXERCISE} from '../utils/queries.js'; // Import your mutations
+import { QUERY_EXERCISE, QUERY_WORKOUT} from '../utils/queries.js'; // Import your mutations
 import React, {useEffect, useState} from 'react';
 import getBrowseData from '../utils/browserImport.js' //Generates images and name for "Browse By Type"
 
@@ -27,12 +27,26 @@ const Browse = () => {
 //Function from import. Helps, generates images and name for "Browse By Type"
   const typeData = getBrowseData();
 
+//Query exercise (ALL), store it as exerciseDataJson. 
   const { data, loading, error } = useQuery(QUERY_EXERCISE);
   const exerciseDataJson = data?.exercises || [];
 
-  const [selectedType, setSelectedType] = useState(''); //Browse-Type that the user selects.
-  const [exerciseData, setExerciseData] = useState(exerciseDataJson); //modified exercisedata to be displayed in results
+  const { workoutData, workoutLoading, workoutError } = useQuery(QUERY_WORKOUT);
+  const WorkoutDataJson = workoutData?.workouts ||[];
+  console.log(WorkoutDataJson);
+
+  //Browse-Type that the user selects.
+  const [selectedType, setSelectedType] = useState(''); 
+//modified exercisedata to be displayed in results
+  const [exerciseData, setExerciseData] = useState(exerciseDataJson); 
   
+// Update exerciseData state when data changes
+  useEffect(() => {
+    if (data) {
+      setExerciseData(data.exercises || []);
+    }
+  }, [data]);
+
   const handleTypeClick = (type) => {
     //logic: check previous type, if equal to type, then set it to blank. Otherwise, set to type. 
     setSelectedType(prevType => (prevType === type ? '' : type));
@@ -53,6 +67,19 @@ const Browse = () => {
 
   return (
     <Container maxW="100%">
+
+{/* Attempt to populate ALL workouts */}
+    {WorkoutDataJson.map((workouts, index) => (
+      <Card key={workouts._id}>
+        <CardHeader fontWeight="bold" fontSize="large">{workouts.name}</CardHeader>
+        <CardBody>{workouts.name}</CardBody>
+        <CardBody>
+          Type: {workouts.description}
+        </CardBody>
+          <Button>Click to add</Button>
+      </Card>
+    ))}
+
 
 {/*Browse Type Section */}
     <Box my={10} display="flex" flexDirection={'column'}>

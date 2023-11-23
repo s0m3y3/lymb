@@ -2,16 +2,95 @@
     {
         "name": "Cardio Rodeo!",
         "description": "A high-intensity cardio workout to boost your heart rate.",
-        "exercises": []
+        "exercises": [
+            {   
+                "_id":"",
+                "name":"Jumping Jack"
+            },
+            {
+                "_id":"",
+                "name":"Jump Rope"
+            },
+            {
+                "_id":"",
+                "name":"High Knee"
+            }
+        ]
     },
     {
         "name": "Strength Builder, no Equipments",
         "description": "A workout focused on building strength and muscle.",
-        "exercises": []
+        "exercises": [
+            {
+                "_id": "",
+                "name": "Push Up"
+            },
+            {
+                "_id": "",
+                "name": "Squats"
+            },
+            {
+                "_id": "",
+                "name": "Burpees"
+            }
+        ]
     },
     {
         "name": "Leg Day - Squatter!",
         "description": "An intense workout focusing on the lower body.",
-        "exercises": []
+        "exercises": [
+            {
+                "_id": "",
+                "name": "Jumping Jack"
+            },
+            {
+                "_id": "",
+                "name": "High Knee"
+            },
+            {
+                "_id": "",
+                "name": "Jump Squats"
+            }
+        ]
+    },
+    {
+        "name": "Whole Body",
+        "description": "Engage in a high-intensity workout regimen, designed to target full-body",
+        "exercises": [
+            {
+                "_id": "",
+                "name": "Burpees"
+            },
+            {
+                "_id": "",
+                "name": "Jump Squats"
+            },
+            {
+                "_id": "",
+                "name": "Mountain Climbers"
+            },
+            {
+                "_id": "",
+                "name": "Russian Twists"
+            }
+        ]
+    },
+    {
+        "name": "Stretching-Flexing",
+        "description": " Focus on improving your flexibility and muscle elasticity",
+        "exercises": [
+            {
+                "_id": "",
+                "name": "Butterfly Stretch"
+            },
+            {
+                "_id": "",
+                "name": "Spinal Twist"
+            },
+            {
+                "_id": "",
+                "name": "Child's Pose"
+            }
+        ]
     }
 ]

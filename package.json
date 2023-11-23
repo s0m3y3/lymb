@@ -15,15 +15,5 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.0"
-  },
-  "dependencies": {
-    "@chakra-ui/counter": "^2.1.0",
-    "@dnd-kit/utilities": "^3.2.2",
-    "react-countdown": "^2.3.5",
-    "react-countdown-circle-timer": "^3.2.1",
-    "react-native-countdown-circle-timer": "^3.2.1",
-    "react-timer-hook": "^3.0.7",
-    "use-sound": "^4.0.1",
-    "use-timer": "^2.0.1"
   }
 }

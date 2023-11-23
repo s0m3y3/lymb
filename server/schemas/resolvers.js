@@ -28,7 +28,7 @@ const resolvers = {
     },
     //fetch all workout.
     workouts: async () => {
-      const workouts = await Workout.find({}).populate("exercises");
+      const workouts = await Workout.find().populate("exercises");
       return workouts;
     },
     workout: async (parent, { _id }) => {
