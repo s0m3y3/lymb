@@ -35,7 +35,6 @@ const ExerciseInterval = () => {
           </Card>
         ))}
       </div>
-      
     </Center>
   );
   
