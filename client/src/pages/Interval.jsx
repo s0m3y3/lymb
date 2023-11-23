@@ -7,9 +7,11 @@ import {
   Select
 } from "@chakra-ui/react";
 
-const Interval = () => {
-  const [workoutTimeOptions] = useState([5, 30, 60, 90, 120]);
-  const [restTimeOptions] = useState([3, 5, 7, 9, 11]);
+import exercise from "./IntLite"
+
+const Interval = ({exercise}) => {
+  const [workoutTimeOptions] = useState([0, 5, 30, 60, 90, 120]);
+  const [restTimeOptions] = useState([0, 3, 5, 7, 9, 11]);
   const [selectedWorkoutTime, setSelectedWorkoutTime] = useState(
     workoutTimeOptions[0]
   );
@@ -110,7 +112,23 @@ const Interval = () => {
   return (
     <Container>
       <Center>
-        <Stack spacing={4}>
+        
+        <Stack spacing={4} position="relative">
+      
+          <div 
+            style={{
+              position: "relative",
+              top: "auto", // Adjust the top position as needed
+              // left: "auto", // Adjust the left position as needed
+              // transform: "translate(-50%, -50%)",
+              fontSize: "30px",
+              textAlign: "center",
+            }}
+          >
+            {timer === 0 && currentSet > sets * 2
+              ? "DONE"
+              : `Set ${Math.ceil(currentSet / 2)}`}
+          </div>
           <div>
             <h2></h2>
           </div>
@@ -127,11 +145,10 @@ const Interval = () => {
               textAlign: "center",
             }}
           >
-            {timer === 0 && currentSet > sets * 2
-              ? "DONE"
-              : `Set ${Math.ceil(currentSet / 2)} : ${
-                  currentSet % 2 === 0 ? "Rest: " : "Workout : "
-                }`}
+            {`  ${
+                 currentSet % 2 === 0 ? "Rest" : exercise || "Workout"
+                }
+                `}
             {timer}
           </div>
           <div>
@@ -215,15 +232,16 @@ const Interval = () => {
               </Select>
             )}
           </div>
-          <div>
+          <div >
             <Button
               colorScheme="teal"
               variant="outline"
               onClick={handleStartPause}
+              
             >
               {isRunning ? "Pause" : "Start"}
             </Button>
-            <Button colorScheme="teal" variant="outline" onClick={handleReset}>
+            <Button style={{alignItems: "center"}} colorScheme="teal" variant="outline" onClick={handleReset}>
               Reset
             </Button>
           </div>
