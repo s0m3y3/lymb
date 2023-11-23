@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 
 import { Center, Button, Container, Stack, Select } from "@chakra-ui/react";
 
+
+
 const Interval = () => {
   const [workoutTimeOptions] = useState([5, 30, 60, 90, 120]);
   const [restTimeOptions] = useState([3, 5, 7, 9, 11]);
-  const [selectedWorkoutTime, setSelectedWorkoutTime] = useState(workoutTimeOptions[0]);
+  const [selectedWorkoutTime, setSelectedWorkoutTime] = useState(
+    workoutTimeOptions[0]
+  );
   const [selectedRestTime, setSelectedRestTime] = useState(restTimeOptions[0]);
   const [workoutTime, setWorkoutTime] = useState(selectedWorkoutTime);
   const [restTime, setRestTime] = useState(selectedRestTime);
@@ -84,9 +88,43 @@ const Interval = () => {
       <Center>
         <Stack spacing={4}>
           <div>
+            <h2></h2>
+          </div>
+          <div
+            style={{
+              width: "200px",
+              height: "200px",
+              borderRadius: "50%",
+              border: "9px solid 		#5f9ea0",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "30px",
+              textAlign: "center",
+            }}
+          >
+            {timer === 0 && currentSet > sets * 2
+              ? "DONE"
+              : `Set ${Math.ceil(currentSet / 2)} : ${
+                  currentSet % 2 === 0 ? "Rest: " : "Workout : "
+                }`}
+
+            {timer}
+          </div>
+          <div>
             <label>
               Workout Time (seconds):
-              <Select value={selectedWorkoutTime.toString()} onChange={(e) => handleSelectChange(e.target.value, setWorkoutTime, setSelectedWorkoutTime)}>
+              <Select
+                value={selectedWorkoutTime.toString()}
+                onChange={(e) =>
+                  handleSelectChange(
+                    e.target.value,
+                    setWorkoutTime,
+                    setSelectedWorkoutTime
+                  )
+                }
+                
+              >
                 {workoutTimeOptions.map((option) => (
                   <option key={option} value={option.toString()}>
                     {option}
@@ -94,12 +132,21 @@ const Interval = () => {
                 ))}
               </Select>
             </label>
-            <p>Selected Workout Time: {selectedWorkoutTime}s</p>
+            {/* <p>Selected Workout Time: {selectedWorkoutTime}s</p> */}
           </div>
           <div>
             <label>
               Rest Time (seconds):
-              <Select value={selectedRestTime.toString()} onChange={(e) => handleSelectChange(e.target.value, setRestTime, setSelectedRestTime)}>
+              <Select
+                value={selectedRestTime.toString()}
+                onChange={(e) =>
+                  handleSelectChange(
+                    e.target.value,
+                    setRestTime,
+                    setSelectedRestTime
+                  )
+                }
+              >
                 {restTimeOptions.map((option) => (
                   <option key={option} value={option.toString()}>
                     {option}
@@ -107,12 +154,17 @@ const Interval = () => {
                 ))}
               </Select>
             </label>
-            <p>Selected Rest Time: {selectedRestTime}s</p>
+            {/* <p>Selected Rest Time: {selectedRestTime}s</p> */}
           </div>
           <div>
             <label>
               Number of Sets:
-              <Select value={sets.toString()} onChange={(e) => handleSelectChange(e.target.value, setSets, setSets)}>
+              <Select
+                value={sets.toString()}
+                onChange={(e) =>
+                  handleSelectChange(e.target.value, setSets, setSets)
+                }
+              >
                 {[1, 2, 3, 4, 5].map((option) => (
                   <option key={option} value={option.toString()}>
                     {option}
@@ -122,35 +174,16 @@ const Interval = () => {
             </label>
           </div>
           <div>
-            <Button colorScheme="teal" variant="outline" onClick={handleStartPause}>
+            <Button
+              colorScheme="teal"
+              variant="outline"
+              onClick={handleStartPause}
+            >
               {isRunning ? "Pause" : "Start"}
             </Button>
             <Button colorScheme="teal" variant="outline" onClick={handleReset}>
               Reset
             </Button>
-          </div>
-          <div>
-            <h2>
-              {timer === 0 && currentSet > sets * 2
-                ? "Finished!"
-                : `Set ${Math.ceil(currentSet / 2)}: ${
-                    currentSet % 2 === 0 ? "Rest" : "Workout"
-                  } - ${timer}s`}
-            </h2>
-          </div>
-          <div
-          style={{
-            width: '100px',
-            height: '100px',
-            borderRadius: '50%',
-            border: '5px solid #3498db',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize: '20px',
-          }}>
- 
-        {timer}
           </div>
         </Stack>
       </Center>
