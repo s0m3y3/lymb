@@ -16,10 +16,10 @@ connection.on('error', (err) => {
 connection.once('open', async () => {
   try {
     //drops exercise data
-    let exerciseCheck = await connection.db.listCollections({ name: 'exercise' }).toArray();
+    let exerciseCheck = await connection.db.listCollections({ name: 'exercises' }).toArray();
     // console.log(exerciseCheck)
     if (exerciseCheck.length) {
-      await connection.dropCollection('exercise');
+      await connection.dropCollection('exercises');
       console.log('Exercise db dropped.');
     }
     //seed exercise data
@@ -27,9 +27,9 @@ connection.once('open', async () => {
     console.log('Exercise seeded.');
 
     //drops workout data
-    let workoutCheck = await connection.db.listCollections({ name: 'workout' }).toArray();
+    let workoutCheck = await connection.db.listCollections({ name: 'workouts' }).toArray();
     if (workoutCheck.length) {
-      await connection.dropCollection('workout');
+      await connection.dropCollection('workouts');
       console.log('Workout db dropped.');
     }
 
