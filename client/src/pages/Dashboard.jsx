@@ -34,12 +34,13 @@ const Dashboard = () => {
   //load in queried logged in user data
   const { loading, data } = useQuery(QUERY_ME);
   const userData = data?.me || {};
+  console.log(userData)
   // Ensure it's an array
   const workouts = userData.workouts || [];
   if (loading) {
     return <h2>Loading...</h2>;
   }
-
+console.log(workouts)
   return (
     <Wrap justify={"space-evenly"} py={10}>
       <VStack
