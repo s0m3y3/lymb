@@ -138,6 +138,20 @@ const Interval = () => {
                   } - ${timer}s`}
             </h2>
           </div>
+          <div
+          style={{
+            width: '100px',
+            height: '100px',
+            borderRadius: '50%',
+            border: '5px solid #3498db',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '20px',
+          }}>
+ 
+        {timer}
+          </div>
         </Stack>
       </Center>
     </Container>
