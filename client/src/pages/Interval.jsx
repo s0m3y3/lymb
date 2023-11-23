@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-
-import { Center, Button, Container, Stack, Select } from "@chakra-ui/react";
-
-
+import {
+  Center,
+  Button,
+  Container,
+  Stack,
+  Select
+} from "@chakra-ui/react";
 
 const Interval = () => {
   const [workoutTimeOptions] = useState([5, 30, 60, 90, 120]);
@@ -17,6 +20,16 @@ const Interval = () => {
   const [currentSet, setCurrentSet] = useState(1);
   const [timer, setTimer] = useState(workoutTime);
   const [isRunning, setIsRunning] = useState(false);
+
+  const [isSetsSelected, setIsSetsSelected] = useState(false);
+
+  const [showWorkoutTimeDropdown, setShowWorkoutTimeDropdown] = useState(true);
+  const [showRestTimeDropdown, setShowRestTimeDropdown] = useState(true);
+  const [showSetsDropdown, setShowSetsDropdown] = useState(true);
+
+  const [showWorkoutTimeLabel, setShowWorkoutTimeLabel] = useState(true);
+  const [showRestTimeLabel, setShowRestTimeLabel] = useState(true);
+  const [showSetsLabel, setShowSetsLabel] = useState(true);
 
   useEffect(() => {
     let interval;
@@ -67,6 +80,12 @@ const Interval = () => {
     setIsRunning(false);
     setCurrentSet(1);
     setTimer(selectedWorkoutTime);
+    setShowWorkoutTimeDropdown(true);
+    setShowRestTimeDropdown(true);
+    setShowSetsDropdown(true);
+    setShowWorkoutTimeLabel(true);
+    setShowRestTimeLabel(true);
+    setShowSetsLabel(true);
   };
 
   const handleInputChange = (value, setter, setSelectedSetter) => {
@@ -76,10 +95,15 @@ const Interval = () => {
     }
   };
 
-  const handleSelectChange = (value, setter, setSelectedSetter) => {
+  const handleSelectChange = (value, setter, setSelectedSetter, setShowDropdown, setShowLabel) => {
     const parsedValue = parseInt(value);
     if (!isNaN(parsedValue)) {
       setSelectedSetter(parsedValue);
+      setShowDropdown(false);
+      setShowLabel(false);
+      if (setter === setSets) {
+        setIsSetsSelected(true);
+      }
     }
   };
 
@@ -95,7 +119,7 @@ const Interval = () => {
               width: "200px",
               height: "200px",
               borderRadius: "50%",
-              border: "9px solid 		#5f9ea0",
+              border: "9px solid #5f9ea0",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -108,22 +132,26 @@ const Interval = () => {
               : `Set ${Math.ceil(currentSet / 2)} : ${
                   currentSet % 2 === 0 ? "Rest: " : "Workout : "
                 }`}
-
             {timer}
           </div>
           <div>
-            <label>
-              Workout Time (seconds):
+            {showWorkoutTimeLabel && (
+              <label>
+                Workout Time (seconds):
+              </label>
+            )}
+            {showWorkoutTimeDropdown && (
               <Select
                 value={selectedWorkoutTime.toString()}
                 onChange={(e) =>
                   handleSelectChange(
                     e.target.value,
                     setWorkoutTime,
-                    setSelectedWorkoutTime
+                    setSelectedWorkoutTime,
+                    setShowWorkoutTimeDropdown,
+                    setShowWorkoutTimeLabel
                   )
                 }
-                
               >
                 {workoutTimeOptions.map((option) => (
                   <option key={option} value={option.toString()}>
@@ -131,19 +159,24 @@ const Interval = () => {
                   </option>
                 ))}
               </Select>
-            </label>
-            {/* <p>Selected Workout Time: {selectedWorkoutTime}s</p> */}
+            )}
           </div>
           <div>
-            <label>
-              Rest Time (seconds):
+            {showRestTimeLabel && (
+              <label>
+                Rest Time (seconds):
+              </label>
+            )}
+            {showRestTimeDropdown && (
               <Select
                 value={selectedRestTime.toString()}
                 onChange={(e) =>
                   handleSelectChange(
                     e.target.value,
                     setRestTime,
-                    setSelectedRestTime
+                    setSelectedRestTime,
+                    setShowRestTimeDropdown,
+                    setShowRestTimeLabel
                   )
                 }
               >
@@ -153,16 +186,25 @@ const Interval = () => {
                   </option>
                 ))}
               </Select>
-            </label>
-            {/* <p>Selected Rest Time: {selectedRestTime}s</p> */}
+            )}
           </div>
           <div>
-            <label>
-              Number of Sets:
+            {showSetsLabel && (
+              <label>
+                Number of Sets:
+              </label>
+            )}
+            {showSetsDropdown && (
               <Select
                 value={sets.toString()}
                 onChange={(e) =>
-                  handleSelectChange(e.target.value, setSets, setSets)
+                  handleSelectChange(
+                    e.target.value,
+                    setSets,
+                    setSets,
+                    setShowSetsDropdown,
+                    setShowSetsLabel
+                  )
                 }
               >
                 {[1, 2, 3, 4, 5].map((option) => (
@@ -171,7 +213,7 @@ const Interval = () => {
                   </option>
                 ))}
               </Select>
-            </label>
+            )}
           </div>
           <div>
             <Button
