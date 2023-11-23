@@ -30,7 +30,7 @@ import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 
 const Dashboard = () => {
-  const [exercises, setExercises] = useState(["Jump", "Crunch", "Run"]);
+  const [exercises, setExercises] = useState([]);
   //load in queried logged in user data
   const { loading, data } = useQuery(QUERY_ME);
   const userData = data?.me || {};
@@ -72,8 +72,15 @@ const Dashboard = () => {
             </CardBody>
             <CardFooter display="flex" justify="space-between">
               <Button
+                key={item._id}
                 bg={theme.colors.darkCyan}
                 color={theme.colors.antiFlashWhite}
+                onClick={()=>setExercises(    
+                  item.exercises.map((item2) => (
+                  <div key={item2._id}>{item2.name}</div>
+                ))
+              
+                )}
               >
                 Edit
               </Button>
