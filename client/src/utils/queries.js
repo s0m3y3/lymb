@@ -40,3 +40,16 @@ export const QUERY_WORKOUT = gql`
     }
   }
 `;
+
+export const QUERY_SINGLE_WORKOUT = gql`
+query Query($_id: String) {
+  workout(_id: $_id) {
+    _id
+    name
+    description
+    exercises {
+      _id
+      name
+    }
+  }
+}`

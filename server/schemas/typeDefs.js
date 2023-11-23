@@ -18,6 +18,7 @@ const typeDefs = `
     users: [User]
     exercises: [Exercise]
     workouts: [Workout]
+    workout(_id: String): Workout
   }
 
   type Mutation {
