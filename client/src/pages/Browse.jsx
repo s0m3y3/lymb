@@ -14,20 +14,19 @@ import AddToWorkoutModal from "../components/AddToWorkoutModal.jsx";
 import theme from "../components/theme";
 import "@fontsource-variable/lexend-peta"; //font theme. 
 import { useQuery } from '@apollo/client';
-import { QUERY_EXERCISE} from '../utils/queries.js'; // Import your mutations
+import { QUERY_EXERCISE} from '../utils/queries.js'; 
 import React, {useEffect, useState} from 'react';
 import getBrowseData from '../utils/browserImport.js' //Generates images and name for "Browse By Type"
 
 const Browse = () => {
 //Function from import. Helps, generates images and name for "Browse By Type"
   const typeData = getBrowseData();
-
   const {loading, data, error } = useQuery(QUERY_EXERCISE);
   const exerciseDataJson = data?.exercises || [];
-console.log(data)
+// console.log(data)
   const [selectedType, setSelectedType] = useState(''); //Browse-Type that the user selects.
   const [exerciseData, setExerciseData] = useState(exerciseDataJson); //modified exercisedata to be displayed in results
- 
+  const [exerciseId, setExerciseId] = useState('');
   ///////////////////////////////////////////////  
   //modal state and functions for open and close
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,6 +40,8 @@ console.log(data)
   };
  //end modal state and functions for open and close
  ////////////////////////////////////////////////// 
+ 
+
  
  const handleTypeClick = (type) => {
     //logic: check previous type, if equal to type, then set it to blank. Otherwise, set to type. 
@@ -111,12 +112,18 @@ console.log(data)
                 Type: {exercise.type}
                 <br />
                 Targets: {exercise.target}</CardBody>
-                <Button onClick={handleModalOpen}>Click to add</Button>
+                <Button onClick={()=>{
+                  handleModalOpen();
+                  setExerciseId(exercise._id);
+                  // console.log(`exercise id is: ${exerciseId}`)
+                  }}>Click to add</Button>
             </Card>
             ))}
         </SimpleGrid>
       </Box>
-      <AddToWorkoutModal isOpen={isModalOpen} onClose={handleModalClose} />
+      {/* using AddToWorkoutModal component. exerciseId is passed as props to the component
+      so we know which exercise to save to the workout the user chooses */}
+      <AddToWorkoutModal isOpen={isModalOpen} onClose={handleModalClose} exerciseId={exerciseId} />
 
     </Container>
   );

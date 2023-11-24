@@ -32,7 +32,9 @@ import Auth from "../utils/auth";
 const Dashboard = () => {
   const [exercises, setExercises] = useState([]);
   //load in queried logged in user data
-  const { loading, data } = useQuery(QUERY_ME);
+  const { loading, data, refetch } = useQuery(QUERY_ME, {
+    pollInterval: 5000,
+  });
   const userData = data?.me || {};
   console.log(userData)
   // Ensure it's an array
@@ -59,16 +61,16 @@ console.log(workouts)
         >
           My Workouts
         </Heading>
-        {workouts.map((item) => (
-          <Card w="95%" key={item._id}>
+        {workouts.map((workout) => (
+          <Card w="95%" key={workout._id}>
             <CardHeader>
               <Heading as="h3" size="md" color={theme.colors.darkCyan}>
-                {item.name}
+                {workout.name}
               </Heading>
             </CardHeader>
             <CardBody>
-              {item.exercises.map((item2) => (
-                <div key={item2._id}>{item2.name}</div>
+              {workout.exercises.map((exercise, index) => (
+                <div key={exercise._id + index}>{exercise.name}</div>
               ))}
             </CardBody>
             <CardFooter display="flex" justify="space-between">
@@ -78,7 +80,7 @@ console.log(workouts)
                 color={theme.colors.antiFlashWhite}
                 onClick={() =>
                   setExercises(
-                    item.exercises.map((item2) => (item2.name))
+                    workout.exercises.map((exercise) => (exercise.name))
                   )
                 }
               >
@@ -91,7 +93,7 @@ console.log(workouts)
                 Delete
               </Button>
               <Button 
-              as={Link} to={`/intLite/${item._id}`}
+              as={Link} to={`/intLite/${workout._id}`}
               bg={theme.colors.carmine}
               color={theme.colors.antiFlashWhite} >
                 Start 
