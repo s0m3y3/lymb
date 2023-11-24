@@ -24,7 +24,7 @@ console.log(numberOfExercises)
               // Rest period
               setCurrentSet((prevSet) => prevSet + 1);
               if (currentSet < sets * 2 * numberOfExercises) {
-                setCurrentExercise((prevCurrentExercise) => (prevCurrentExercise + 2) % numberOfExercises + 1)
+                setCurrentExercise((prevCurrentExercise) => prevCurrentExercise % numberOfExercises === 0 ? 1 :prevCurrentExercise + 1 )
                 setTimer(workoutTime); // Switch to workoutTime
               } else {
                 // All sets completed
