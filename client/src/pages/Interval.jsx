@@ -1,38 +1,15 @@
 import React, { useState, useEffect } from "react";
-import {
-  Center,
-  Button,
-  Container,
-  Stack,
-  Select
-} from "@chakra-ui/react";
 
-import exercise from "./IntLite"
-
-const Interval = ({exercise}) => {
-  const [workoutTimeOptions] = useState([0, 5, 30, 60, 90, 120]);
-  const [restTimeOptions] = useState([0, 3, 5, 7, 9, 11]);
-  const [selectedWorkoutTime, setSelectedWorkoutTime] = useState(
-    workoutTimeOptions[0]
-  );
-  const [selectedRestTime, setSelectedRestTime] = useState(restTimeOptions[0]);
-  const [workoutTime, setWorkoutTime] = useState(selectedWorkoutTime);
-  const [restTime, setRestTime] = useState(selectedRestTime);
-  const [sets, setSets] = useState(5);
+const WorkoutTimer = (props) => {
+  const [workoutTime, setWorkoutTime] = useState(5); // in seconds
+  const [restTime, setRestTime] = useState(2); // in seconds
+  const [sets, setSets] = useState(2);
   const [currentSet, setCurrentSet] = useState(1);
-  const [timer, setTimer] = useState(workoutTime);
+  const [currentExercise, setCurrentExercise] = useState(1);
+  const [timer, setTimer] = useState(workoutTime); // Initialize with workoutTime
   const [isRunning, setIsRunning] = useState(false);
-
-  const [isSetsSelected, setIsSetsSelected] = useState(false);
-
-  const [showWorkoutTimeDropdown, setShowWorkoutTimeDropdown] = useState(true);
-  const [showRestTimeDropdown, setShowRestTimeDropdown] = useState(true);
-  const [showSetsDropdown, setShowSetsDropdown] = useState(true);
-
-  const [showWorkoutTimeLabel, setShowWorkoutTimeLabel] = useState(true);
-  const [showRestTimeLabel, setShowRestTimeLabel] = useState(true);
-  const [showSetsLabel, setShowSetsLabel] = useState(true);
-
+  const numberOfExercises = props.workout.exercises.length
+console.log(numberOfExercises)
   useEffect(() => {
     let interval;
 
@@ -42,19 +19,23 @@ const Interval = ({exercise}) => {
           if (prevTimer > 1) {
             return prevTimer - 1;
           } else {
-            if (currentSet % 2 === 0) {
+            // Switch between workout and rest periods
+            if (currentSet % 2 === 0 ) {
+              // Rest period
               setCurrentSet((prevSet) => prevSet + 1);
-
-              if (currentSet < sets * 2) {
-                setTimer(workoutTime);
+              if (currentSet < sets * 2 * numberOfExercises) {
+                setCurrentExercise((prevCurrentExercise) => prevCurrentExercise % numberOfExercises === 0 ? 1 :prevCurrentExercise + 1 )
+                setTimer(workoutTime); // Switch to workoutTime
               } else {
+                // All sets completed
                 setIsRunning(false);
-                setTimer(0);
+                setTimer(0); // Set timer to 0 to display "finished"
               }
             } else {
-              if (currentSet < sets * 2) {
+              // Workout period
+              if (currentSet < sets * 2* numberOfExercises) {
                 setCurrentSet((prevSet) => prevSet + 1);
-                setTimer(restTime);
+                setTimer(restTime); // Switch to restTime
               }
             }
             return prevTimer;
@@ -69,186 +50,67 @@ const Interval = ({exercise}) => {
   }, [isRunning, timer, currentSet, workoutTime, restTime, sets]);
 
   const handleStartPause = () => {
-    if (!isRunning) {
-      setWorkoutTime(selectedWorkoutTime);
-      setRestTime(selectedRestTime);
-      setCurrentSet(1);
-      setTimer(selectedWorkoutTime);
-    }
     setIsRunning((prevIsRunning) => !prevIsRunning);
   };
 
   const handleReset = () => {
     setIsRunning(false);
     setCurrentSet(1);
-    setTimer(selectedWorkoutTime);
-    setShowWorkoutTimeDropdown(true);
-    setShowRestTimeDropdown(true);
-    setShowSetsDropdown(true);
-    setShowWorkoutTimeLabel(true);
-    setShowRestTimeLabel(true);
-    setShowSetsLabel(true);
-  };
-
-  const handleInputChange = (value, setter, setSelectedSetter) => {
-    const parsedValue = parseInt(value);
-    if (!isNaN(parsedValue)) {
-      setSelectedSetter(parsedValue);
-    }
-  };
-
-  const handleSelectChange = (value, setter, setSelectedSetter, setShowDropdown, setShowLabel) => {
-    const parsedValue = parseInt(value);
-    if (!isNaN(parsedValue)) {
-      setSelectedSetter(parsedValue);
-      setShowDropdown(false);
-      setShowLabel(false);
-      if (setter === setSets) {
-        setIsSetsSelected(true);
-      }
-    }
+    setCurrentExercise(1)
+    setTimer(workoutTime); // Reset to workoutTime
   };
 
   return (
-    <Container>
-      <Center>
-        
-        <Stack spacing={4} position="relative">
-      
-          <div 
-            style={{
-              position: "relative",
-              top: "auto", // Adjust the top position as needed
-              // left: "auto", // Adjust the left position as needed
-              // transform: "translate(-50%, -50%)",
-              fontSize: "30px",
-              textAlign: "center",
-            }}
-          >
-            {timer === 0 && currentSet > sets * 2
-              ? "DONE"
-              : `Set ${Math.ceil(currentSet / 2)}`}
-          </div>
-          <div>
-            <h2></h2>
-          </div>
-          <div
-            style={{
-              width: "200px",
-              height: "200px",
-              borderRadius: "50%",
-              border: "9px solid #5f9ea0",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: "30px",
-              textAlign: "center",
-            }}
-          >
-            {`  ${
-                 currentSet % 2 === 0 ? "Rest" : exercise || "Workout"
-                }
-                `}
-            {timer}
-          </div>
-          <div>
-            {showWorkoutTimeLabel && (
-              <label>
-                Workout Time (seconds):
-              </label>
-            )}
-            {showWorkoutTimeDropdown && (
-              <Select
-                value={selectedWorkoutTime.toString()}
-                onChange={(e) =>
-                  handleSelectChange(
-                    e.target.value,
-                    setWorkoutTime,
-                    setSelectedWorkoutTime,
-                    setShowWorkoutTimeDropdown,
-                    setShowWorkoutTimeLabel
-                  )
-                }
-              >
-                {workoutTimeOptions.map((option) => (
-                  <option key={option} value={option.toString()}>
-                    {option}
-                  </option>
-                ))}
-              </Select>
-            )}
-          </div>
-          <div>
-            {showRestTimeLabel && (
-              <label>
-                Rest Time (seconds):
-              </label>
-            )}
-            {showRestTimeDropdown && (
-              <Select
-                value={selectedRestTime.toString()}
-                onChange={(e) =>
-                  handleSelectChange(
-                    e.target.value,
-                    setRestTime,
-                    setSelectedRestTime,
-                    setShowRestTimeDropdown,
-                    setShowRestTimeLabel
-                  )
-                }
-              >
-                {restTimeOptions.map((option) => (
-                  <option key={option} value={option.toString()}>
-                    {option}
-                  </option>
-                ))}
-              </Select>
-            )}
-          </div>
-          <div>
-            {showSetsLabel && (
-              <label>
-                Number of Sets:
-              </label>
-            )}
-            {showSetsDropdown && (
-              <Select
-                value={sets.toString()}
-                onChange={(e) =>
-                  handleSelectChange(
-                    e.target.value,
-                    setSets,
-                    setSets,
-                    setShowSetsDropdown,
-                    setShowSetsLabel
-                  )
-                }
-              >
-                {[1, 2, 3, 4, 5].map((option) => (
-                  <option key={option} value={option.toString()}>
-                    {option}
-                  </option>
-                ))}
-              </Select>
-            )}
-          </div>
-          <div >
-            <Button
-              colorScheme="teal"
-              variant="outline"
-              onClick={handleStartPause}
-              
-            >
-              {isRunning ? "Pause" : "Start"}
-            </Button>
-            <Button style={{alignItems: "center"}} colorScheme="teal" variant="outline" onClick={handleReset}>
-              Reset
-            </Button>
-          </div>
-        </Stack>
-      </Center>
-    </Container>
+    <div>
+      <div>
+        <label>
+          <div>{props.workout.name} </div>
+          <div>Workout Time (seconds):</div>
+          <input
+            type="number"
+            value={workoutTime}
+            onChange={(e) => setWorkoutTime(parseInt(e.target.value))}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Rest Time (seconds):
+          <input
+            type="number"
+            value={restTime}
+            onChange={(e) => setRestTime(parseInt(e.target.value))}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Number of Sets:
+          <input
+            type="number"
+            value={sets}
+            onChange={(e) => setSets(parseInt(e.target.value))}
+          />
+        </label>
+      </div>
+      <div>
+        <button onClick={handleStartPause}>
+          {isRunning ? "Pause" : "Start"}
+        </button>
+        <button onClick={handleReset}>Reset</button>
+      </div>
+      <div>
+        <h2>
+          
+          {timer === 0 && currentSet > sets * 2
+            ? "Finished!"
+            : `${props.workout.exercises[currentExercise-1].name} Set ${Math.ceil(currentSet / (2 * numberOfExercises))}: ${
+                currentSet % 2 === 0 ? "Rest" : "Workout"
+              } - ${timer}s`}
+        </h2>
+      </div>
+    </div>
   );
 };
 
-export default Interval;
+export default WorkoutTimer;

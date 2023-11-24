@@ -40,7 +40,7 @@ const ExerciseInterval = () => {
   return (
     <Center>
       <div>
-      <Interval/>
+      <Interval workout={workout}/>
       </div>
       
       <div className="timer-wrapper">
