@@ -27,6 +27,7 @@ const typeDefs = `
     createWorkout(input: CreateWorkoutInput!): Workout
     deleteWorkout(input: WorkoutInput!): Workout
     updateWorkout(input: WorkoutInput!): Workout
+    updateWorkoutAddExercise(input: WorkoutInput!): Workout
   }
 
   input CreateWorkoutInput {

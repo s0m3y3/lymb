@@ -101,6 +101,17 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
+    updateWorkoutAddExercise: async (parent, { input }, context) => {
+      if (context.user) {
+        const updatedWorkout = await Workout.findOneAndUpdate(
+          { _id: input._id },
+          { $push: { exercises: input.exercises } },
+          { new: true }
+          );
+          return updatedWorkout;
+      }
+      throw AuthenticationError;
+    },
   },
 };
 

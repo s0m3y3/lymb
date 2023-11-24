@@ -4,18 +4,13 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Collapse,
   Heading,
-  Input,
-  InputLeftAddon,
   Image,
   SimpleGrid,
   Container,
-  InputGroup,
-  InputRightAddon,
   Wrap,
 } from "@chakra-ui/react";
-
+import AddToWorkoutModal from "../components/AddToWorkoutModal.jsx";
 import theme from "../components/theme";
 import "@fontsource-variable/lexend-peta"; //font theme. 
 import { useQuery } from '@apollo/client';
@@ -27,13 +22,27 @@ const Browse = () => {
 //Function from import. Helps, generates images and name for "Browse By Type"
   const typeData = getBrowseData();
 
-  const { data, loading, error } = useQuery(QUERY_EXERCISE);
+  const {loading, data, error } = useQuery(QUERY_EXERCISE);
   const exerciseDataJson = data?.exercises || [];
-
+console.log(data)
   const [selectedType, setSelectedType] = useState(''); //Browse-Type that the user selects.
   const [exerciseData, setExerciseData] = useState(exerciseDataJson); //modified exercisedata to be displayed in results
-  
-  const handleTypeClick = (type) => {
+ 
+  ///////////////////////////////////////////////  
+  //modal state and functions for open and close
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+ //end modal state and functions for open and close
+ ////////////////////////////////////////////////// 
+ 
+ const handleTypeClick = (type) => {
     //logic: check previous type, if equal to type, then set it to blank. Otherwise, set to type. 
     setSelectedType(prevType => (prevType === type ? '' : type));
   
@@ -102,11 +111,12 @@ const Browse = () => {
                 Type: {exercise.type}
                 <br />
                 Targets: {exercise.target}</CardBody>
-                <Button>Click to add</Button>
+                <Button onClick={handleModalOpen}>Click to add</Button>
             </Card>
             ))}
         </SimpleGrid>
       </Box>
+      <AddToWorkoutModal isOpen={isModalOpen} onClose={handleModalClose} />
 
     </Container>
   );
