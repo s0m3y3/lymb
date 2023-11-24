@@ -17,18 +17,28 @@ import "@fontsource-variable/lexend-peta";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
-
-const AddToWorkoutModal = ({ isOpen, onClose }) => {
-  const { loading, data } = useQuery(QUERY_ME);
+import { ADD_EXERCISE_TO_WORKOUT } from "../utils/mutations.js";
+const AddToWorkoutModal = ({ isOpen, onClose, exerciseId }) => {
+  const [addExerciseToWorkout, { error }] = useMutation(ADD_EXERCISE_TO_WORKOUT);
+  const { loading, data, refetch } = useQuery(QUERY_ME);
   const userData = data?.me || {};
-
   if (loading) {
     return <h2>Loading...</h2>;
   }
 
   // Ensure it's an array
   const workouts = userData.workouts || [];
-  console.log(workouts);
+  // console.log(workouts);
+
+  const handleSaveExerciseToWorkout = async (workoutid,exerciseid) => {
+    try {
+      const { data } = await addExerciseToWorkout({
+        variables: { input: {_id: workoutid, exercises: exerciseid  } },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -44,8 +54,9 @@ const AddToWorkoutModal = ({ isOpen, onClose }) => {
             <MenuList>
               {workouts?.map((workout) => (
                 <MenuItem onClick= {() => {
-                  console.log(workout._id);
-                  onClose;
+                  handleSaveExerciseToWorkout(workout._id,exerciseId);
+                  refetch();
+                  onClose();
                 }}> {workout.name}</MenuItem>
               ))}
             </MenuList>
