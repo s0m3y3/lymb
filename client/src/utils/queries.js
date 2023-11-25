@@ -32,11 +32,16 @@ export const QUERY_EXERCISE = gql`
 export const QUERY_WORKOUT = gql`
   {
     workouts {
-      _id: ID
-      type: String
-      name: String
-      description: String
-      target: String
+      _id
+      description
+      name
+      exercises {
+        _id
+        description
+        name
+        target
+        type
+      }
     }
   }
 `;

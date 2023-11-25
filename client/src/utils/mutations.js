@@ -85,8 +85,8 @@ export const UPDATE_WORKOUT = gql`
 
 // deleteWorkout(input: ID!): Workout
 export const DELETE_WORKOUT = gql`
-  mutation deleteWorkout($input: WorkoutInput!) {
-    deleteWorkout(input: $input) {
+  mutation deleteWorkout($input: DeleteWorkoutInput!) {
+    deleteWorkout(input: $input){
       _id
     }
   }

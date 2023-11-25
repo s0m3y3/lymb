@@ -25,7 +25,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     createWorkout(input: CreateWorkoutInput!): Workout
-    deleteWorkout(input: WorkoutInput!): Workout
+    deleteWorkout(input: DeleteWorkoutInput!): Workout
     updateWorkout(input: WorkoutInput!): Workout
     updateWorkoutAddExercise(input: WorkoutInput!): Workout
   }
@@ -41,6 +41,10 @@ const typeDefs = `
     name: String
     description: String
     exercises: [String]
+  }
+
+  input DeleteWorkoutInput{
+    _id: ID!
   }
 
   input Exercise {

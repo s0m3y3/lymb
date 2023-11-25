@@ -19,14 +19,17 @@ import React, {useEffect, useState} from 'react';
 import getBrowseData from '../utils/browserImport.js' //Generates images and name for "Browse By Type"
 
 const Browse = () => {
-//Function from import. Helps, generates images and name for "Browse By Type"
-  const typeData = getBrowseData();
-  const {loading, data, error } = useQuery(QUERY_EXERCISE);
-  const exerciseDataJson = data?.exercises || [];
-// console.log(data)
+  const typeData = getBrowseData(); //Function from import. Helps, generates "Browse By Type" section with images and name.
+  const {loading: loadingExercise, data: dataExercise, error: errorExercise } = useQuery(QUERY_EXERCISE); //query Exercise
+  const exerciseDataJson = dataExercise?.exercises || []; //set query Exercise to variable
+
   const [selectedType, setSelectedType] = useState(''); //Browse-Type that the user selects.
   const [exerciseData, setExerciseData] = useState(exerciseDataJson); //modified exercisedata to be displayed in results
   const [exerciseId, setExerciseId] = useState('');
+
+// Update exerciseData state when data changes. IF missing, intial exercises will not populate when click "Browse" in navbar. 
+  useEffect(() => {if (dataExercise) {setExerciseData(dataExercise.exercises || []);}}, [dataExercise]);
+
   ///////////////////////////////////////////////  
   //modal state and functions for open and close
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,7 +44,6 @@ const Browse = () => {
  //end modal state and functions for open and close
  ////////////////////////////////////////////////// 
  
-
  
  const handleTypeClick = (type) => {
     //logic: check previous type, if equal to type, then set it to blank. Otherwise, set to type. 
@@ -57,9 +59,8 @@ const Browse = () => {
     if (selectedType === type || !type) {
       setExerciseData(exerciseDataJson);
     } else {
-      setExerciseData(filteredExercises);
-    }
-  };
+        setExerciseData(filteredExercises);}
+    };
 
   return (
     <Container maxW="100%">
@@ -105,7 +106,7 @@ const Browse = () => {
         <SimpleGrid spacing={10} minChildWidth={300} textAlign="center">
   {/* Maps through exerciseData (includes filtering), to populate the cards. */}
             {exerciseData.map((exercise, index) => (
-            <Card key={exercise._id}>
+            <Card key={index}>
               <CardHeader fontWeight="bold" fontSize="large">{exercise.name}</CardHeader>
               <CardBody>{exercise.description}</CardBody>
               <CardBody>

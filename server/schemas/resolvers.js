@@ -76,20 +76,66 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    deleteWorkout: async (parent, { workoutId }, context) => {
-      if (context.user) {
-        const workout = await Workout.findOneAndDelete({
-          _id: workoutId,
-        });
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { workouts: workout._id } },
-          { new: true }
-        );
-        return workout;
-      }
-      throw AuthenticationError;
-    },
+    //ORIGINAL
+    // deleteWorkout: async (parent, { workoutId }, context) => {
+    //   if (context.user) {
+    //     try {
+    //       const workout = await Workout.findOneAndDelete({
+    //         _id: workoutId,
+    //       });
+    //       // console.log(workoutId)
+    //       await User.findOneAndUpdate(
+    //         { _id: context.user._id },
+    //         { $pull: { workouts: workout._id } },
+    //         { new: true }
+    //       );
+    //       return workout;
+    //     }
+    //     catch (error) {
+    //       console.error('Error deleting workout:', error);
+    //       throw new Error('Failed to delete workout.');
+    //     }
+    //     throw AuthenticationError;
+    //   }
+    // },
+        //Yee's Testing no user, just deleteWorkout
+        // deleteWorkout: async (parent, { workoutId }) => {
+        //   try {
+        //     // Assuming 'Workout' is the model and the context.user provides authenticated information
+        //     const workout = await Workout.findByIdAndDelete(workoutId);
+            
+        //     if (!workout) {
+        //       throw new Error('Workout not found'); // Throw an error if workout is not found
+        //     }
+      
+        //     return workout; // Return the deleted workout as confirmation
+        //   } catch (error) {
+        //     console.error('Error deleting workout:', error);
+        //     throw new Error('Failed to delete workout.');
+        //   }
+        // },
+
+        deleteWorkout: async (_, { DeleteWorkoutInput }) => {
+            try {
+              const workout = await Workout.findByIdAndRemove(DeleteWorkoutInput );
+        
+              if (!workout) {
+                throw new Error('Workout not found');
+              }
+        
+              return workout;
+            } catch (error) {
+              console.error('Error deleting workout:', error);
+              throw new Error('Failed to delete workout.');
+            }
+          
+        },
+        
+        
+            
+    
+    
+
     updateWorkout: async (parent, { input }, context) => {
       if (context.user) {
         const updatedWorkout = await Workout.findOneAndUpdate(

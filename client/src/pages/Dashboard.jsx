@@ -26,23 +26,38 @@ import { useState } from "react";
 import { SortableExercise } from "../components/SortableExercise";
 //allow queries
 import { useQuery, useMutation } from "@apollo/client";
+import { DELETE_WORKOUT } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 
 const Dashboard = () => {
+  const [deleteWorkoutMutation] = useMutation(DELETE_WORKOUT);
   const [exercises, setExercises] = useState([]);
   //load in queried logged in user data
   const { loading, data, refetch } = useQuery(QUERY_ME, {
     pollInterval: 5000,
   });
   const userData = data?.me || {};
-  console.log(userData)
+  // console.log(userData)
   // Ensure it's an array
   const workouts = userData.workouts || [];
   if (loading) {
     return <h2>Loading...</h2>;
   }
-console.log(workouts)
+  // console.log(workouts)
+
+  const handleDeleteWorkout = async (workoutId) => {
+    const { data } = await deleteWorkoutMutation(
+      {
+        variables: {
+          input: {
+            _id: workoutId
+          }
+        }
+      }
+    );
+  };
+
   return (
     <Wrap justify={"space-evenly"} py={10}>
       <VStack
@@ -87,8 +102,10 @@ console.log(workouts)
                 Edit
               </Button>
               <Button
+                key={workout._id}
                 bg={theme.colors.carmine}
                 color={theme.colors.antiFlashWhite}
+                onClick={()=>handleDeleteWorkout(workout._id)}
               >
                 Delete
               </Button>
