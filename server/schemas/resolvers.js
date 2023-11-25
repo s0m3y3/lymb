@@ -76,10 +76,10 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    deleteWorkout: async (parent, { workoutId }, context) => {
+    deleteWorkout: async (parent, { input }, context) => {
       if (context.user) {
         const workout = await Workout.findOneAndDelete({
-          _id: workoutId,
+          _id: input._id,
         });
         await User.findOneAndUpdate(
           { _id: context.user._id },

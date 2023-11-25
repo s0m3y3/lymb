@@ -7,6 +7,9 @@ import {
   Heading,
   Show,
   Hide,
+  Button,
+  Flex, 
+  Input,
 } from "@chakra-ui/react";
 
 const WorkoutTimer = (props) => {
@@ -75,53 +78,59 @@ const WorkoutTimer = (props) => {
 
   return (
     <div>
+      <fade></fade>
+        <Flex mb={4}>
+            <label>
+              <div>Workout Time (seconds):</div>
+              <Input
+                type="number"
+                value={workoutTime}
+                onChange={(e) => setWorkoutTime(parseInt(e.target.value))}
+              />
+            </label>
+          </Flex>
+
+      <Flex mb={4}>
+            <label>
+              <div>Rest Time (seconds):</div>
+              <Input
+                type="number"
+                value={restTime}
+                onChange={(e) => setRestTime(parseInt(e.target.value))}
+              />
+            </label>
+          </Flex>
+      
+      <Flex mb={4}>
+            <label>
+              <div>Number of Sets:</div>
+              <Input
+                type="number"
+                value={sets}
+                onChange={(e) => setSets(parseInt(e.target.value))}
+              />
+            </label>
+          </Flex>
+      
       <div>
-        <label>
-          <div>{props.workout.name} </div>
-          <div>Workout Time (seconds):</div>
-          <input
-            type="number"
-            value={workoutTime}
-            onChange={(e) => setWorkoutTime(parseInt(e.target.value))}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Rest Time (seconds):
-          <input
-            type="number"
-            value={restTime}
-            onChange={(e) => setRestTime(parseInt(e.target.value))}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Number of Sets:
-          <input
-            type="number"
-            value={sets}
-            onChange={(e) => setSets(parseInt(e.target.value))}
-          />
-        </label>
-      </div>
-      <div>
-        <button onClick={handleStartPause}>
+        <Button mx={2} colorScheme="cyan" onClick={handleStartPause}>
           {isRunning ? "Pause" : "Start"}
-        </button>
-        <button onClick={handleReset}>Reset</button>
+        </Button>
+        <Button colorScheme="yellow" onClick={handleReset}>Reset</Button>
       </div>
       <div>
-        <h2>
-          {timer === 0 && currentSet > sets * 2
-            ? "Finished!"
-            : `${
-                props.workout.exercises[currentExercise - 1].name
-              } Set ${Math.ceil(currentSet / (2 * numberOfExercises))}: ${
-                currentSet % 2 === 0 ? "Rest" : "Workout"
-              } - ${timer}s`}
-        </h2>
+     
+        <Flex
+         
+        >
+          <Heading>
+            {timer === 0 && currentSet > sets * 2
+              ? "Finished!"
+              : `${props.workout.exercises[currentExercise - 1].name} 
+              Set ${Math.ceil(currentSet / (2 * numberOfExercises))}:
+              ${currentSet % 2 === 0 ? "Rest" : "Workout"} - ${timer} sec`}
+          </Heading>
+        </Flex>
       </div>
       {console.log(props.workout.exercises[currentExercise -1])}
       <Heading as="h2" size="lg" mt={4}>
