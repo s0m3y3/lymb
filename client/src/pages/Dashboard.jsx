@@ -14,7 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import theme from "../components/theme";
 import "@fontsource-variable/lexend-peta";
-import { UPDATE_WORKOUT } from "../utils/mutations.js";
+import { UPDATE_WORKOUT, DELETE_WORKOUT } from "../utils/mutations.js";
 
 // Imports to create a drag and drop sortable list
 import { DndContext, closestCenter } from "@dnd-kit/core";
@@ -32,7 +32,7 @@ import Auth from "../utils/auth";
 
 const Dashboard = () => {
   const [updateWorkout, { error }] = useMutation(UPDATE_WORKOUT);
-
+  const [deleteWorkout, { errorDelete }] = useMutation(DELETE_WORKOUT);
   const [exercises, setExercises] = useState([]);
   const [workoutName, setWorkoutName] = useState("");
   const [workoutId, setWorkoutId] = useState("");
@@ -47,7 +47,7 @@ const Dashboard = () => {
   if (loading) {
     return <Heading size="sm">Loading...</Heading>;
   }
-  // console.log(workouts);
+  console.log(workouts);
   const handleUpdateWorkout = async (workoutid, exerciseid) => {
     try {
       const { data } = await updateWorkout({
@@ -57,7 +57,16 @@ const Dashboard = () => {
       console.error(err);
     }
   };
-
+  // Function for delete workout on delete button click
+  const handleDeleteWorkout = async (workoutid) => {
+    try {
+      const { data } = await deleteWorkout({
+        variables: { input: { _id: workoutid } },
+      });
+    } catch (meoutside) {
+      console.error(meoutside);
+    }
+  };
   return (
     <Wrap justify={"space-evenly"} py={10}>
       <VStack
@@ -102,12 +111,18 @@ const Dashboard = () => {
               >
                 Edit
               </Button>
+
               <Button
                 bg={theme.colors.carmine}
                 color={theme.colors.antiFlashWhite}
+                onClick={() => {
+                  handleDeleteWorkout(workout._id);
+                  refetch();
+                }}
               >
                 Delete
               </Button>
+
               <Button
                 as={Link}
                 to={`/intLite/${workout._id}`}
@@ -148,11 +163,8 @@ const Dashboard = () => {
               />
             ))}
           </SortableContext>
-       
-          <Heading 
-          marginX={3} 
-          size="sm"
-          hidden={hideElements}>
+
+          <Heading marginX={3} size="sm" hidden={hideElements}>
             To add exercises, vist the browse page
           </Heading>
           <Button
@@ -170,7 +182,6 @@ const Dashboard = () => {
           >
             save
           </Button>
-          
         </DndContext>
       </Box>
     </Wrap>
@@ -181,7 +192,7 @@ const Dashboard = () => {
     // console.log("ACTIVE: " + active.id);
     // console.log("OVER: " + over.id);
     if (active.id !== over.id) {
-      toggleHideElements(false)
+      toggleHideElements(false);
       setExercises((items) => {
         console.log(items);
         const activeIndex = items.findIndex(

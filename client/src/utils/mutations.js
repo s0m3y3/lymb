@@ -83,7 +83,7 @@ export const UPDATE_WORKOUT = gql`
 
 // deleteWorkout(input: ID!): Workout
 export const DELETE_WORKOUT = gql`
-  mutation deleteWorkout($input: WorkoutInput!) {
+  mutation Mutation($input: WorkoutInput!) {
     deleteWorkout(input: $input) {
       _id
     }
@@ -92,9 +92,9 @@ export const DELETE_WORKOUT = gql`
 
 //add an exercise to a workout
 export const ADD_EXERCISE_TO_WORKOUT = gql`
-mutation Mutation($input: WorkoutInput!) {
-  updateWorkoutAddExercise(input: $input) {
-    _id
+  mutation Mutation($input: WorkoutInput!) {
+    updateWorkoutAddExercise(input: $input) {
+      _id
+    }
   }
-}
-`
+`;
