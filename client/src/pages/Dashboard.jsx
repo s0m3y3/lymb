@@ -14,7 +14,11 @@ import {
 import { Link } from "react-router-dom";
 import theme from "../components/theme";
 import "@fontsource-variable/lexend-peta";
-import { UPDATE_WORKOUT, DELETE_WORKOUT } from "../utils/mutations.js";
+import {
+  UPDATE_WORKOUT,
+  DELETE_WORKOUT,
+  CREATE_WORKOUT,
+} from "../utils/mutations.js";
 
 // Imports to create a drag and drop sortable list
 import { DndContext, closestCenter } from "@dnd-kit/core";
@@ -33,6 +37,8 @@ import Auth from "../utils/auth";
 const Dashboard = () => {
   const [updateWorkout, { error }] = useMutation(UPDATE_WORKOUT);
   const [deleteWorkout, { errorDelete }] = useMutation(DELETE_WORKOUT);
+  const [createWorkout, { errorCreate }] = useMutation(CREATE_WORKOUT);
+
   const [exercises, setExercises] = useState([]);
   const [workoutName, setWorkoutName] = useState("");
   const [workoutId, setWorkoutId] = useState("");
@@ -67,6 +73,19 @@ const Dashboard = () => {
       console.error(meoutside);
     }
   };
+  // Function to create a workout when clicking "create workout" button
+  const handleCreateWorkout = async (newName, newDescription) => {
+    try {
+      const { data } = await createWorkout({
+        variables: { input: { name: newName, description: newDescription } },
+      });
+     await refetch();
+    } catch (acold) {
+      console.error(acold);
+    }
+  
+  };
+
   return (
     <Wrap justify={"space-evenly"} py={10}>
       <VStack
@@ -88,9 +107,11 @@ const Dashboard = () => {
         {workouts.map((workout, index) => (
           <Card w="95%" key={`ex1-${index}`}>
             <CardHeader>
-              <Heading as="h3" size="md" color={theme.colors.darkCyan}>
+              <Heading size="md" color={theme.colors.darkCyan}>
                 {workout.name}
               </Heading>
+
+              <Heading size="sm">{workout.description}</Heading>
             </CardHeader>
             <CardBody>
               {workout.exercises.map((exercise, index) => (
@@ -135,7 +156,17 @@ const Dashboard = () => {
           </Card>
         ))}
 
-        <Button>Create Workout</Button>
+        <Button
+          onClick={() => {
+            handleCreateWorkout(
+              "Click edit to enter a workout name.",
+              "Click edit to enter a description of workout."
+            )
+            // refetch()
+          }}
+        >
+          Create Workout
+        </Button>
       </VStack>
       <Box
         as={"aside"}
@@ -176,7 +207,7 @@ const Dashboard = () => {
               handleUpdateWorkout(
                 workoutId,
                 exercises.map((exercise) => exercise._id)
-              );
+              )
               refetch();
             }}
           >

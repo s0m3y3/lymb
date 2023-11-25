@@ -59,15 +59,11 @@ export const UPDATE_EXERCISE = gql`
 
 // createWorkout(input: WorkoutInput!): Workout
 export const CREATE_WORKOUT = gql`
-  mutation createWorkout($input: CreateWorkoutInput!) {
-    createWorkout(input: $input) {
-      _id
-      name
-      description
-      exercises
-      target
-    }
+mutation Mutation($input: CreateWorkoutInput!) {
+  createWorkout(input: $input) {
+    _id
   }
+}
 `;
 
 // updateWorkout(input: WorkoutUpdate!): Workout
