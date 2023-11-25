@@ -183,13 +183,13 @@ const Dashboard = () => {
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            items={exercises.map((exercise) => exercise._id)}
+            items={exercises.map((exercise, index) => `${exercise._id}-${index}`)}
             strategy={verticalListSortingStrategy}
           >
             {exercises.map((exercise, index) => (
               <SortableExercise
                 key={`ex-${index}`}
-                id={exercise._id}
+                id={`${exercise._id}-${index}`}
                 name={exercise.name}
               />
             ))}
@@ -220,24 +220,24 @@ const Dashboard = () => {
   function handleDragEnd(event) {
     // console.log("Drag end called");
     const { active, over } = event;
-    // console.log("ACTIVE: " + active.id);
-    // console.log("OVER: " + over.id);
-    if (active.id !== over.id) {
+    console.log("ACTIVE: " + active.id);
+    console.log("OVER: " + over.id);
+    // if (active.id !== over.id) {
       toggleHideElements(false);
       setExercises((items) => {
         console.log(items);
         const activeIndex = items.findIndex(
-          (exercise) => exercise._id === active.id
+          (exercise,index) =>`${exercise._id}-${index}` === active.id
         );
         const overIndex = items.findIndex(
-          (exercise) => exercise._id === over.id
+          (exercise,index) =>`${exercise._id}-${index}` === over.id
         );
 
         const resortedExercises = arrayMove(items, activeIndex, overIndex);
 
         return resortedExercises;
       });
-    }
+    // }
     console.log(exercises);
   }
 };
