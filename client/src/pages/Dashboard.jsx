@@ -14,6 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import theme from "../components/theme";
 import "@fontsource-variable/lexend-peta";
+import { UPDATE_WORKOUT } from "../utils/mutations.js";
 
 // Imports to create a drag and drop sortable list
 import { DndContext, closestCenter } from "@dnd-kit/core";
@@ -30,19 +31,33 @@ import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 
 const Dashboard = () => {
+  const [updateWorkout, { error }] = useMutation(UPDATE_WORKOUT);
+
   const [exercises, setExercises] = useState([]);
+  const [workoutName, setWorkoutName] = useState("");
+  const [workoutId, setWorkoutId] = useState("");
+  const [editElements, populateEditElements] = useState("");
   //load in queried logged in user data
-  const { loading, data, refetch } = useQuery(QUERY_ME, {
-    pollInterval: 5000,
-  });
+  const { loading, data, refetch } = useQuery(QUERY_ME);
   const userData = data?.me || {};
-  console.log(userData)
+
+  // console.log(userData);
   // Ensure it's an array
   const workouts = userData.workouts || [];
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <Heading size="sm">Loading...</Heading>;
   }
-console.log(workouts)
+  // console.log(workouts);
+  const handleUpdateWorkout = async (workoutid, exerciseid) => {
+    try {
+      const { data } = await updateWorkout({
+        variables: { input: { _id: workoutid, exercises: exerciseid } },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <Wrap justify={"space-evenly"} py={10}>
       <VStack
@@ -61,8 +76,8 @@ console.log(workouts)
         >
           My Workouts
         </Heading>
-        {workouts.map((workout) => (
-          <Card w="95%" key={workout._id}>
+        {workouts.map((workout, index) => (
+          <Card w="95%" key={`ex1-${index}`}>
             <CardHeader>
               <Heading as="h3" size="md" color={theme.colors.darkCyan}>
                 {workout.name}
@@ -70,19 +85,19 @@ console.log(workouts)
             </CardHeader>
             <CardBody>
               {workout.exercises.map((exercise, index) => (
-                <div key={exercise._id + index}>{exercise.name}</div>
+                <div key={`ex2-${index}`}>{exercise.name}</div>
               ))}
             </CardBody>
             <CardFooter display="flex" justify="space-between">
               <Button
-                
                 bg={theme.colors.darkCyan}
                 color={theme.colors.antiFlashWhite}
-                onClick={() =>
-                  setExercises(
-                    workout.exercises.map((exercise) => (exercise.name))
-                  )
-                }
+                onClick={() => {
+                  setExercises(workout.exercises.map((exercise) => exercise));
+                  setWorkoutName(workout.name);
+                  // populateEditElements(<></>);
+                  setWorkoutId(workout._id);
+                }}
               >
                 Edit
               </Button>
@@ -92,11 +107,13 @@ console.log(workouts)
               >
                 Delete
               </Button>
-              <Button 
-              as={Link} to={`/intLite/${workout._id}`}
-              bg={theme.colors.carmine}
-              color={theme.colors.antiFlashWhite} >
-                Start 
+              <Button
+                as={Link}
+                to={`/intLite/${workout._id}`}
+                bg={theme.colors.carmine}
+                color={theme.colors.antiFlashWhite}
+              >
+                Start
               </Button>
             </CardFooter>
           </Card>
@@ -110,40 +127,68 @@ console.log(workouts)
         minW="30%"
         h="100%"
         alignContent={"center"}
+        // padding={0}
       >
-        <Heading>Workout Name</Heading>
-        <Button bg={theme.colors.darkCyan} color={theme.colors.antiFlashWhite}>
-          Add Exercises
-        </Button>
+        <Heading marginX={3}>{workoutName}</Heading>
+
         <DndContext
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            items={exercises}
+            items={exercises.map((exercise) => exercise._id)}
             strategy={verticalListSortingStrategy}
           >
-            {exercises.map((exercise) => (
-              <SortableExercise key={exercise} id={exercise} />
+            {exercises.map((exercise, index) => (
+              <SortableExercise
+                key={`ex-${index}`}
+                id={exercise._id}
+                name={exercise.name}
+              />
             ))}
           </SortableContext>
+          <Heading marginX={3} size="sm">
+            To add exercises, vist the browse page
+          </Heading>
+          <Button
+            margin={5}
+            bg={theme.colors.darkCyan}
+            color={theme.colors.antiFlashWhite}
+            onClick={() => {
+              handleUpdateWorkout(
+                workoutId,
+                exercises.map((exercise) => exercise._id)
+              );
+              refetch();
+            }}
+          >
+            save
+          </Button>
         </DndContext>
       </Box>
     </Wrap>
   );
   function handleDragEnd(event) {
-    console.log("Drag end called");
+    // console.log("Drag end called");
     const { active, over } = event;
-    console.log("ACTIVE: " + active.id);
-    console.log("OVER: " + over.id);
+    // console.log("ACTIVE: " + active.id);
+    // console.log("OVER: " + over.id);
     if (active.id !== over.id) {
       setExercises((items) => {
-        const activeIndex = items.indexOf(active.id);
-        const overIndex = items.indexOf(over.id);
+        console.log(items);
+        const activeIndex = items.findIndex(
+          (exercise) => exercise._id === active.id
+        );
+        const overIndex = items.findIndex(
+          (exercise) => exercise._id === over.id
+        );
 
-        return arrayMove(items, activeIndex, overIndex);
+        const resortedExercises = arrayMove(items, activeIndex, overIndex);
+
+        return resortedExercises;
       });
     }
+    console.log(exercises);
   }
 };
 

@@ -48,14 +48,8 @@ const ExerciseInterval = () => {
         <br />
         <div style={{ display: "flex" }}></div>
 
-        <Heading as="h2" size="lg" mt={4}>
-          Exercise Data
-        </Heading>
-        {workout.exercises.map((exercise) => (
-          <Card key={exercise._id} mb={6} >
-            <CardHeader>{exercise.name}</CardHeader>
-          </Card>
-        ))}
+
+
       </div>
     </Center>
   );

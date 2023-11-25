@@ -77,8 +77,6 @@ export const UPDATE_WORKOUT = gql`
       _id
       name
       description
-      exercises
-      target
     }
   }
 `;
