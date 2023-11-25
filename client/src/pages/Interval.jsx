@@ -1,4 +1,13 @@
 import React, { useState, useEffect } from "react";
+import {
+  Center,
+  CardHeader,
+  Card,
+  CardBody,
+  Heading,
+  Show,
+  Hide,
+} from "@chakra-ui/react";
 
 const WorkoutTimer = (props) => {
   const [workoutTime, setWorkoutTime] = useState(5); // in seconds
@@ -8,8 +17,8 @@ const WorkoutTimer = (props) => {
   const [currentExercise, setCurrentExercise] = useState(1);
   const [timer, setTimer] = useState(workoutTime); // Initialize with workoutTime
   const [isRunning, setIsRunning] = useState(false);
-  const numberOfExercises = props.workout.exercises.length
-console.log(numberOfExercises)
+  const numberOfExercises = props.workout.exercises.length;
+  console.log(numberOfExercises);
   useEffect(() => {
     let interval;
 
@@ -20,11 +29,15 @@ console.log(numberOfExercises)
             return prevTimer - 1;
           } else {
             // Switch between workout and rest periods
-            if (currentSet % 2 === 0 ) {
+            if (currentSet % 2 === 0) {
               // Rest period
               setCurrentSet((prevSet) => prevSet + 1);
               if (currentSet < sets * 2 * numberOfExercises) {
-                setCurrentExercise((prevCurrentExercise) => prevCurrentExercise % numberOfExercises === 0 ? 1 :prevCurrentExercise + 1 )
+                setCurrentExercise((prevCurrentExercise) =>
+                  prevCurrentExercise % numberOfExercises === 0
+                    ? 1
+                    : prevCurrentExercise + 1
+                );
                 setTimer(workoutTime); // Switch to workoutTime
               } else {
                 // All sets completed
@@ -33,7 +46,7 @@ console.log(numberOfExercises)
               }
             } else {
               // Workout period
-              if (currentSet < sets * 2* numberOfExercises) {
+              if (currentSet < sets * 2 * numberOfExercises) {
                 setCurrentSet((prevSet) => prevSet + 1);
                 setTimer(restTime); // Switch to restTime
               }
@@ -56,7 +69,7 @@ console.log(numberOfExercises)
   const handleReset = () => {
     setIsRunning(false);
     setCurrentSet(1);
-    setCurrentExercise(1)
+    setCurrentExercise(1);
     setTimer(workoutTime); // Reset to workoutTime
   };
 
@@ -101,14 +114,30 @@ console.log(numberOfExercises)
       </div>
       <div>
         <h2>
-          
           {timer === 0 && currentSet > sets * 2
             ? "Finished!"
-            : `${props.workout.exercises[currentExercise-1].name} Set ${Math.ceil(currentSet / (2 * numberOfExercises))}: ${
+            : `${
+                props.workout.exercises[currentExercise - 1].name
+              } Set ${Math.ceil(currentSet / (2 * numberOfExercises))}: ${
                 currentSet % 2 === 0 ? "Rest" : "Workout"
               } - ${timer}s`}
         </h2>
       </div>
+      {console.log(props.workout.exercises[currentExercise -1])}
+      <Heading as="h2" size="lg" mt={4}>
+        Exercises
+      </Heading>
+      {props.workout.exercises.map((exercise) => (
+  exercise._id === props.workout.exercises[currentExercise -1]._id ? (
+    <Card bg="green.500" color="white" key={exercise._id} mb={6}>
+      <CardHeader>{exercise.name}</CardHeader>
+    </Card>
+  ) : (
+    <Card key={exercise._id} mb={6}>
+      <CardHeader>{exercise.name}</CardHeader>
+    </Card>
+  )
+))}
     </div>
   );
 };

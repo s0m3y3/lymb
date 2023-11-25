@@ -36,7 +36,6 @@ export const QUERY_WORKOUT = gql`
       type: String
       name: String
       description: String
-      target: String
     }
   }
 `;

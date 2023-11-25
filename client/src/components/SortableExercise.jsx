@@ -18,7 +18,7 @@ import theme from "./theme";
 export function SortableExercise(props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
-
+// console.log(`props id is: ${props.id}`)
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -28,7 +28,7 @@ export function SortableExercise(props) {
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <Card m={3}>
         <CardBody>
-          <Text>{props.id}</Text>
+          <Text>{props.name}</Text>
         </CardBody>
       </Card>
     </div>
