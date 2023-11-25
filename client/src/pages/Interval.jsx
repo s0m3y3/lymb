@@ -8,20 +8,26 @@ import {
   Show,
   Hide,
   Button,
-  Flex, 
+  Flex,
   Input,
+  
 } from "@chakra-ui/react";
 
 const WorkoutTimer = (props) => {
-  const [workoutTime, setWorkoutTime] = useState(5); // in seconds
-  const [restTime, setRestTime] = useState(2); // in seconds
+  // in seconds
+  const [workoutTime, setWorkoutTime] = useState(5);
+  // in seconds
+  const [restTime, setRestTime] = useState(2);
   const [sets, setSets] = useState(2);
   const [currentSet, setCurrentSet] = useState(1);
   const [currentExercise, setCurrentExercise] = useState(1);
-  const [timer, setTimer] = useState(workoutTime); // Initialize with workoutTime
+  // Initialize with workoutTime
+  const [timer, setTimer] = useState(workoutTime);
   const [isRunning, setIsRunning] = useState(false);
+  const [hideElements, setHideElements] = useState(false);
   const numberOfExercises = props.workout.exercises.length;
   console.log(numberOfExercises);
+
   useEffect(() => {
     let interval;
 
@@ -41,17 +47,20 @@ const WorkoutTimer = (props) => {
                     ? 1
                     : prevCurrentExercise + 1
                 );
-                setTimer(workoutTime); // Switch to workoutTime
+                // Switch to workoutTime
+                setTimer(workoutTime);
               } else {
                 // All sets completed
                 setIsRunning(false);
-                setTimer(0); // Set timer to 0 to display "finished"
+                // Set timer to 0 to display "finished"
+                setTimer(0);
               }
             } else {
               // Workout period
               if (currentSet < sets * 2 * numberOfExercises) {
                 setCurrentSet((prevSet) => prevSet + 1);
-                setTimer(restTime); // Switch to restTime
+                // Switch to restTime
+                setTimer(restTime);
               }
             }
             return prevTimer;
@@ -66,63 +75,83 @@ const WorkoutTimer = (props) => {
   }, [isRunning, timer, currentSet, workoutTime, restTime, sets]);
 
   const handleStartPause = () => {
+    setTimer(workoutTime);
     setIsRunning((prevIsRunning) => !prevIsRunning);
+    setHideElements((prevHideElement) => !prevHideElement);
   };
 
   const handleReset = () => {
     setIsRunning(false);
     setCurrentSet(1);
     setCurrentExercise(1);
-    setTimer(workoutTime); // Reset to workoutTime
+    // Reset to workoutTime
+    setTimer(workoutTime);
   };
 
   return (
     <div>
-      <fade></fade>
-        <Flex mb={4}>
+      {!isRunning && !hideElements && (
+        // Conditionally rendering input fields only when the timer is not running
+        <div>
+          <Flex mb={4}>
             <label>
-              <div>Workout Time (seconds):</div>
+              <div>Enter Workout Time (seconds):</div>
               <Input
+                name="workoutTime"
                 type="number"
                 value={workoutTime}
-                onChange={(e) => setWorkoutTime(parseInt(e.target.value))}
+                onChange={(e) => {
+                  setWorkoutTime(parseInt(e.target.value));
+                  if(e.target.value !== ""){
+                  setTimer(parseInt(e.target.value))};
+                }}
               />
             </label>
           </Flex>
 
-      <Flex mb={4}>
+          <Flex mb={4}>
             <label>
-              <div>Rest Time (seconds):</div>
+              <div>Enter Rest Time (seconds):</div>
               <Input
+                name="restTime"
                 type="number"
                 value={restTime}
                 onChange={(e) => setRestTime(parseInt(e.target.value))}
               />
             </label>
           </Flex>
-      
-      <Flex mb={4}>
+
+          <Flex mb={4}>
             <label>
-              <div>Number of Sets:</div>
+              <div>Enter Number of Sets:</div>
               <Input
+                nam="setNumber"
                 type="number"
                 value={sets}
                 onChange={(e) => setSets(parseInt(e.target.value))}
               />
             </label>
           </Flex>
-      
+        </div>
+      )}
+
       <div>
+        {/* Always visible buttons */}
         <Button mx={2} colorScheme="cyan" onClick={handleStartPause}>
           {isRunning ? "Pause" : "Start"}
         </Button>
-        <Button colorScheme="yellow" onClick={handleReset}>Reset</Button>
+        <Button
+          colorScheme="yellow"
+          onClick={() => {
+            handleReset();
+            setHideElements(false);
+          }}
+        >
+          Reset
+        </Button>
       </div>
       <div>
-     
-        <Flex
-         
-        >
+        <Flex>
           <Heading>
             {timer === 0 && currentSet > sets * 2
               ? "Finished!"
@@ -132,21 +161,21 @@ const WorkoutTimer = (props) => {
           </Heading>
         </Flex>
       </div>
-      {console.log(props.workout.exercises[currentExercise -1])}
+      {console.log(props.workout.exercises[currentExercise - 1])}
       <Heading as="h2" size="lg" mt={4}>
         Exercises
       </Heading>
-      {props.workout.exercises.map((exercise) => (
-  exercise._id === props.workout.exercises[currentExercise -1]._id ? (
-    <Card bg="green.500" color="white" key={exercise._id} mb={6}>
-      <CardHeader>{exercise.name}</CardHeader>
-    </Card>
-  ) : (
-    <Card key={exercise._id} mb={6}>
-      <CardHeader>{exercise.name}</CardHeader>
-    </Card>
-  )
-))}
+      {props.workout.exercises.map((exercise) =>
+        exercise._id === props.workout.exercises[currentExercise - 1]._id ? (
+          <Card bg="green.500" color="white" key={exercise._id} mb={6}>
+            <CardHeader>{exercise.name}</CardHeader>
+          </Card>
+        ) : (
+          <Card key={exercise._id} mb={6}>
+            <CardHeader>{exercise.name}</CardHeader>
+          </Card>
+        )
+      )}
     </div>
   );
 };
