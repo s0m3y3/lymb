@@ -36,7 +36,7 @@ const Dashboard = () => {
   const [exercises, setExercises] = useState([]);
   const [workoutName, setWorkoutName] = useState("");
   const [workoutId, setWorkoutId] = useState("");
-  const [editElements, populateEditElements] = useState("");
+  const [hideElements, toggleHideElements] = useState(true);
   //load in queried logged in user data
   const { loading, data, refetch } = useQuery(QUERY_ME);
   const userData = data?.me || {};
@@ -97,6 +97,7 @@ const Dashboard = () => {
                   setWorkoutName(workout.name);
                   // populateEditElements(<></>);
                   setWorkoutId(workout._id);
+                  toggleHideElements(false);
                 }}
               >
                 Edit
@@ -147,10 +148,15 @@ const Dashboard = () => {
               />
             ))}
           </SortableContext>
-          <Heading marginX={3} size="sm">
+       
+          <Heading 
+          marginX={3} 
+          size="sm"
+          hidden={hideElements}>
             To add exercises, vist the browse page
           </Heading>
           <Button
+            hidden={hideElements}
             margin={5}
             bg={theme.colors.darkCyan}
             color={theme.colors.antiFlashWhite}
@@ -164,6 +170,7 @@ const Dashboard = () => {
           >
             save
           </Button>
+          
         </DndContext>
       </Box>
     </Wrap>
@@ -174,6 +181,7 @@ const Dashboard = () => {
     // console.log("ACTIVE: " + active.id);
     // console.log("OVER: " + over.id);
     if (active.id !== over.id) {
+      toggleHideElements(false)
       setExercises((items) => {
         console.log(items);
         const activeIndex = items.findIndex(
