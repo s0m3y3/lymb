@@ -30,6 +30,9 @@ Github:
 [IsabellaKingson](https://github.com/IsabellaKingson)  
 [s0m3y3](https://github.com/s0m3y3/)  
 
+https://chakra-templates.dev/
+Open Source
+
 ## License
   MIT License
 
