@@ -94,3 +94,12 @@ export const ADD_EXERCISE_TO_WORKOUT = gql`
     }
   }
 `;
+
+export const UPDATE_WORKOUT_NAME = gql`
+mutation Mutation($input: WorkoutInput!) {
+  updateWorkoutName(input: $input) {
+    _id
+    name
+    description
+  }
+}`
