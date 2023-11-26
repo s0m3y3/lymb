@@ -222,14 +222,19 @@ const Dashboard = () => {
           alignContent={"center"}
           // padding={0}
         >
-          <Input 
+          <Heading margin="1" size={'md'}>Workout Name:</Heading>
+          <Input
+          bg={'white.200'}
           placeholder={workoutName}
           onChange={(e) => setNewWorkoutName(e.target.value == '' ? thisWorkout.name : e.target.value )}
           ></Input>
-          <Input 
+          <Heading margin="1"  size={'md'}>Workout Description:</Heading>
+          <Input
+          bg={'white.200'} 
           placeholder={thisWorkout.description} 
           onChange={(e) => setNewWorkoutDesc(e.target.value == '' ? thisWorkout.description : e.target.value) }
           ></Input>
+          <Heading margin="1" size={'md'}>Exercises:</Heading>
           <DndContext
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
