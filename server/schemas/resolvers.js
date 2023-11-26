@@ -113,6 +113,19 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
+
+    updateWorkoutName: async (parent, { input }, context) => {
+      if (context.user) {
+        const updatedWorkout = await Workout.findOneAndUpdate(
+          { _id: input._id },
+          { $set: { name: input.name, description: input.description } },
+          { new: true }
+          );
+          return updatedWorkout;
+      }
+      throw AuthenticationError;
+    },
+
     updateWorkoutAddExercise: async (parent, { input }, context) => {
       if (context.user) {
         const updatedWorkout = await Workout.findOneAndUpdate(

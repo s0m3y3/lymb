@@ -19,6 +19,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Input,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import theme from "../components/theme";
@@ -27,6 +28,7 @@ import {
   UPDATE_WORKOUT,
   DELETE_WORKOUT,
   CREATE_WORKOUT,
+  UPDATE_WORKOUT_NAME
 } from "../utils/mutations.js";
 
 // Imports to create a drag and drop sortable list
@@ -47,7 +49,7 @@ const Dashboard = () => {
   const [updateWorkout, { error }] = useMutation(UPDATE_WORKOUT);
   const [deleteWorkout, { errorDelete }] = useMutation(DELETE_WORKOUT);
   const [createWorkout, { errorCreate }] = useMutation(CREATE_WORKOUT);
-
+  const [updateWorkoutName, { errorWorkoutName}] = useMutation(UPDATE_WORKOUT_NAME )
   const [exercises, setExercises] = useState([]);
   const [disallowSort, toggleSort] = useState(true);
   const [workoutName, setWorkoutName] = useState("");
@@ -57,7 +59,8 @@ const Dashboard = () => {
   const [hideX, toggleHideX] = useState(true);
   const { loading, data, refetch } = useQuery(QUERY_ME);
   const [hideDeleted, setHideDeleted] = useState(false);
-
+  const [newWorkoutName, setNewWorkoutName] = useState("")
+  const [newWorkoutDesc, setNewWorkoutDesc] = useState("")
   const userData = data?.me || {};
 
   //this function adds click listeners that hide elements whose x is clicked
@@ -105,13 +108,25 @@ const Dashboard = () => {
   const handleCreateWorkout = async (newName, newDescription) => {
     try {
       const { data } = await createWorkout({
-        variables: { input: { name: newName, description: newDescription } },
+        variables: { input: {  name: newName, description: newDescription } },
       });
       await refetch();
     } catch (acold) {
       console.error(acold);
     }
   };
+
+    // Function to create a workout when clicking "create workout" button
+    const handleUpdateWorkoutName = async (workoutid, newName, newDescription) => {
+      try {
+        const { data } = await updateWorkoutName({
+          variables: { input: {_id: workoutid, name: newName, description: newDescription } },
+        });
+        await refetch();
+      } catch (acold) {
+        console.error(acold);
+      }
+    };
 
   return (
     <Wrap justify={"space-evenly"} py={10}>
@@ -156,6 +171,8 @@ const Dashboard = () => {
                   setWorkoutId(workout._id);
                   setThisWorkout(workout);
                   toggleHideElements(false);
+                  setNewWorkoutDesc(workout.description)
+                  setNewWorkoutName(workout.name)
                 }}
               >
                 Edit
@@ -205,8 +222,14 @@ const Dashboard = () => {
           alignContent={"center"}
           // padding={0}
         >
-          <Heading marginX={3}>{workoutName}</Heading>
-
+          <Input 
+          placeholder={workoutName}
+          onChange={(e) => setNewWorkoutName(e.target.value == '' ? thisWorkout.name : e.target.value )}
+          ></Input>
+          <Input 
+          placeholder={thisWorkout.description} 
+          onChange={(e) => setNewWorkoutDesc(e.target.value == '' ? thisWorkout.description : e.target.value) }
+          ></Input>
           <DndContext
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
@@ -328,6 +351,7 @@ const Dashboard = () => {
                   workoutId,
                   exercises.map((exercise) => exercise._id)
                 );
+                handleUpdateWorkoutName(thisWorkout._id, newWorkoutName,newWorkoutDesc)
                 console.log(thisWorkout);
                 toggleSort(true);
                 toggleHideX(true);
