@@ -24,9 +24,11 @@ export function SortableExercise(props) {
     transition,
   };
 
+
+  
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Card m={3} border='1px' borderColor='yellow.200'> 
+      <Card  m={3} border='1px' borderColor='yellow.200'> 
         <CardBody>
           <Text>{props.name}</Text>
         </CardBody>

@@ -12,6 +12,13 @@ import {
   Text,
   VStack,
   Wrap,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import theme from "../components/theme";
@@ -49,7 +56,22 @@ const Dashboard = () => {
   const [hideElements, toggleHideElements] = useState(true);
   const [hideX, toggleHideX] = useState(true);
   const { loading, data, refetch } = useQuery(QUERY_ME);
+  const [hideDeleted, setHideDeleted] = useState(false);
+
   const userData = data?.me || {};
+
+  //this function adds click listeners that hide elements whose x is clicked
+  let toDelete = document.getElementsByName("toDelete");
+  toDelete.forEach((item) => {
+    item.addEventListener("click", function () {
+      this.hidden = true;
+    });
+  });
+  //This function will unhide all that were hidden by the above, It is in the onClick of
+  //'cancel delete'
+  const resetColor = () => {
+    toDelete.forEach((item) => (item.hidden = false));
+  };
 
   // console.log(userData);
   // Ensure it's an array
@@ -144,7 +166,6 @@ const Dashboard = () => {
                 color={theme.colors.antiFlashWhite}
                 onClick={() => {
                   handleDeleteWorkout(workout._id);
-                  
                 }}
               >
                 Delete
@@ -175,136 +196,149 @@ const Dashboard = () => {
         </Button>
       </VStack>
 
-      {!hideElements &&
-      <Box
-        as={"aside"}
-        bg={theme.colors.timberwolf}
-        minW="30%"
-        h="100%"
-        alignContent={"center"}
-        // padding={0}
-      >
-        <Heading marginX={3}>{workoutName}</Heading>
-
-        <DndContext
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
+      {!hideElements && (
+        <Box
+          as={"aside"}
+          bg={theme.colors.timberwolf}
+          minW="30%"
+          h="100%"
+          alignContent={"center"}
+          // padding={0}
         >
-          {disallowSort ? (
-            <>
-              {thisWorkout?.exercises?.map((exercise, index) => (
-                <Card m={3} key={`ex3-${index}`} borderColor={'red.200'}>
-                  <Flex>
-                    <CardBody>
-                      <div >{exercise.name}</div>
-                    </CardBody>
-                    <Spacer />
-                    {!hideX && (
-                      <Button
-                        onClick={(e) => {
-                          exercises.splice(
-                            exercises.findIndex(
-                              (item) => item._id == exercise._id
-                            ),
-                            1
-                          );
-                        }}
-                      >
-                        x
-                      </Button>
-                    )}
-                  </Flex>
-                </Card>
-              ))}
-              {hideX && <Button
-              hidden={hideElements}
-                margin={3}
-                onClick={() => {
-                  toggleSort(false);
-                  toggleHideX(true);
-                }}
-              >
-                Sort Exercises
-              </Button>}
-              {hideX && <Button
-              hidden={hideElements}
-                margin={3}
-                onClick={() => {
-                  toggleSort(true);
-                  toggleHideX(false);
-                }}
-              >
-                Delete Exercises
-              </Button>}
-              {!hideX && <Button
-              hidden={hideElements}
-                margin={3}
-                onClick={() => {
-                  toggleSort(true);
-                  toggleHideX(true);
-                  setExercises(
-                    thisWorkout?.exercises?.map((exercise) => exercise)
-                  );
-                }}
-              >
-                Cancel Delete Exercises
-              </Button>}
-            </>
-          ) : (
-            <>
-              <SortableContext
-              
-                items={exercises.map(
-                  (exercise, index) => `${exercise._id}-${index}`
-                )}
-                strategy={verticalListSortingStrategy}
-              >
-                {exercises.map((exercise, index) => (
-                  <SortableExercise
-                    key={`ex-${index}`}
-                    id={`${exercise._id}-${index}`}
-                    name={exercise.name}
-                  />
-                ))}
-              </SortableContext>
-              <Button
-                hidden={hideElements}
-                marginX={3}
-                onClick={() => {
-                  toggleSort(true);
-                  setExercises(
-                    thisWorkout?.exercises?.map((exercise) => exercise)
-                  );
-                  toggleHideX(true);
-                }}
-              >
-                Cancel Sort
-              </Button>
-            </>
-          )}
-          <Heading margin={3} size="sm" hidden={hideElements}>
-            To add exercises, vist the browse page
-          </Heading>
-          <Button
-            hidden={hideElements}
-            margin={5}
-            bg={theme.colors.darkCyan}
-            color={theme.colors.antiFlashWhite}
-            onClick={() => {
-              handleUpdateWorkout(
-                workoutId,
-                exercises.map((exercise) => exercise._id)
-              );
-              console.log(thisWorkout);
-              toggleSort(true);
-              toggleHideX(true)
-              toggleHideElements(true)
-            }}
+          <Heading marginX={3}>{workoutName}</Heading>
+
+          <DndContext
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
           >
-            save
-          </Button>
-        </DndContext>
-      </Box>}
+            {disallowSort ? (
+              <>
+                {thisWorkout?.exercises?.map((exercise, index) => (
+                  <Card
+                    m={3}
+                    key={`ex3-${index}`}
+                    name={"toDelete"}
+                    hidden={hideDeleted}
+                  >
+                    <Flex>
+                      <CardBody>
+                        <div>{exercise.name}</div>
+                      </CardBody>
+                      <Spacer />
+                      {!hideX && (
+                        <Button
+                          onClick={(e) => {
+                            exercises.splice(
+                              exercises.findIndex(
+                                (item) => item._id == exercise._id
+                              ),
+                              1
+                            );
+                          }}
+                        >
+                          x
+                        </Button>
+                      )}
+                    </Flex>
+                  </Card>
+                ))}
+                {hideX && (
+                  <Button
+                    hidden={hideElements}
+                    margin={3}
+                    onClick={() => {
+                      toggleSort(false);
+                      toggleHideX(true);
+                    }}
+                  >
+                    Sort Exercises
+                  </Button>
+                )}
+                {hideX && (
+                  <Button
+                    hidden={hideElements}
+                    margin={3}
+                    onClick={() => {
+                      toggleSort(true);
+                      toggleHideX(false);
+                    }}
+                  >
+                    Delete Exercises
+                  </Button>
+                )}
+                {!hideX && (
+                  <Button
+                    hidden={hideElements}
+                    name={"cancelDelete"}
+                    margin={3}
+                    onClick={() => {
+                      toggleSort(true);
+                      toggleHideX(true);
+                      setExercises(
+                        thisWorkout?.exercises?.map((exercise) => exercise)
+                      );
+                      resetColor();
+                    }}
+                  >
+                    Cancel Delete Exercises
+                  </Button>
+                )}
+              </>
+            ) : (
+              <>
+                <SortableContext
+                  items={exercises.map(
+                    (exercise, index) => `${exercise._id}-${index}`
+                  )}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {exercises.map((exercise, index) => (
+                    <SortableExercise
+                      key={`ex-${index}`}
+                      id={`${exercise._id}-${index}`}
+                      name={exercise.name}
+                    />
+                  ))}
+                </SortableContext>
+                <Button
+                  hidden={hideElements}
+                  marginX={3}
+                  onClick={() => {
+                    toggleSort(true);
+                    setExercises(
+                      thisWorkout?.exercises?.map((exercise) => exercise)
+                    );
+                    toggleHideX(true);
+                  }}
+                >
+                  Cancel Sort
+                </Button>
+              </>
+            )}
+            <Heading margin={3} size="sm" hidden={hideElements}>
+              To add exercises, vist the browse page
+            </Heading>
+            <Button
+              hidden={hideElements}
+              margin={5}
+              bg={theme.colors.darkCyan}
+              color={theme.colors.antiFlashWhite}
+              onClick={() => {
+                handleUpdateWorkout(
+                  workoutId,
+                  exercises.map((exercise) => exercise._id)
+                );
+                console.log(thisWorkout);
+                toggleSort(true);
+                toggleHideX(true);
+                toggleHideElements(true);
+              }}
+            >
+              save
+            </Button>
+          </DndContext>
+        </Box>
+      )}
     </Wrap>
   );
   function handleDragEnd(event) {
