@@ -10,7 +10,7 @@ import {
   Button,
   Flex,
   Input,
-  
+  Box,
 } from "@chakra-ui/react";
 
 const WorkoutTimer = (props) => {
@@ -89,13 +89,13 @@ const WorkoutTimer = (props) => {
   };
 
   return (
-    <div>
+    <Box mb={5} minW={350} maxW={500}>
       {!isRunning && !hideElements && (
         // Conditionally rendering input fields only when the timer is not running
-        <div>
-          <Flex mb={4}>
+        <Box>
+          <Flex mb={4} justifyContent="center">
             <label>
-              <div>Enter Workout Time (seconds):</div>
+              <Box>Enter Workout Time (seconds):</Box>
               <Input
                 name="workoutTime"
                 type="number"
@@ -109,7 +109,7 @@ const WorkoutTimer = (props) => {
             </label>
           </Flex>
 
-          <Flex mb={4}>
+          <Flex mb={4} justifyContent="center">
             <label>
               <div>Enter Rest Time (seconds):</div>
               <Input
@@ -121,7 +121,7 @@ const WorkoutTimer = (props) => {
             </label>
           </Flex>
 
-          <Flex mb={4}>
+          <Flex mb={4} justifyContent="center">
             <label>
               <div>Enter Number of Sets:</div>
               <Input
@@ -132,12 +132,12 @@ const WorkoutTimer = (props) => {
               />
             </label>
           </Flex>
-        </div>
+        </Box>
       )}
 
-      <div>
+      <Flex justifyContent="center" mb={5}>
         {/* Always visible buttons */}
-        <Button mx={2} colorScheme="cyan" onClick={handleStartPause}>
+        <Button mx={2} colorScheme="cyan" onClick={handleStartPause} >
           {isRunning ? "Pause" : "Start"}
         </Button>
         <Button
@@ -149,20 +149,32 @@ const WorkoutTimer = (props) => {
         >
           Reset
         </Button>
-      </div>
-      <div>
-        <Flex>
-          <Heading>
+      </Flex>
+      <Box>
+        <Flex justifyContent="center">
+          <Heading textAlign={'center'}>
             {timer === 0 && currentSet > sets * 2
               ? "Finished!"
-              : `${props.workout.exercises[currentExercise - 1].name} 
-              Set ${Math.ceil(currentSet / (2 * numberOfExercises))}:
-              ${currentSet % 2 === 0 ? "Rest" : "Workout"} - ${timer} sec`}
+              : (
+                <>
+                  {props.workout.exercises[currentExercise - 1].name}
+                  <Flex justifyContent="center" minW={350} maxW={500}>
+                    <span>
+                      {`Set ${Math.ceil(currentSet / (2 * numberOfExercises))}:`}
+                      {currentSet % 2 === 0 ? "Rest" : "Workout"}
+                    </span>
+                  </Flex>
+                  <Box textColor={"blue"} fontSize={'larger'} color={currentSet % 2 === 0 ? "gray" : "blue"}>
+                  {timer} sec
+                  </Box>
+                </>
+              )
+            }
           </Heading>
         </Flex>
-      </div>
+      </Box>
       {console.log(props.workout.exercises[currentExercise - 1])}
-      <Heading as="h2" size="lg" mt={4}>
+      <Heading as="h2" size="lg" m={3} textAlign="center">
         Exercises
       </Heading>
       {props.workout.exercises.map((exercise,index) =>
@@ -176,7 +188,7 @@ const WorkoutTimer = (props) => {
           </Card>
         )
       )}
-    </div>
+    </Box>
   );
 };
 

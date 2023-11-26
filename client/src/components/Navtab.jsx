@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -25,28 +25,12 @@ const Links = [
   { label: 'Browse', to: '/browse' },
 ];
 
-const NavLink = ({ children, to }) => {
-  return (
-    <Link
-      to={to}
-      as={Button}
-      px={2}
-      py={1}
-      rounded="md"
-      _hover={{
-        textDecoration: 'none',
-        bg: useColorModeValue('gray.200', 'gray.700'),
-      }}
-    >
-      {children}
-    </Link>
-  );
-};
-
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navBackgroundColor = useColorModeValue(theme.colors.carmine);
-  const tabTextColor = useColorModeValue(theme.colors.darkCyan);
+  const hoverTextColor = useColorModeValue(theme.colors.darkCyan);
+  const tabTextColor = useColorModeValue('red.500', 'red.200'); // Change to your desired active text color
+
   const tabStyle = {
     fontFamily: theme.fonts.heading,
     color: useColorModeValue(theme.colors.antiFlashWhite),
@@ -70,20 +54,39 @@ const Navbar = () => {
             <Image src={whitelogo} alt="white-logo" boxSize="60px" margin="5px" />
             <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }} >
               {Links.map((link) => (
-                <NavLink key={link.label} to={link.to} >
-                  {link.label}
-                </NavLink>
+                <Link key={link.label} to={link.to} >
+                  <Box
+                    as="span"
+                    px={2}
+                    py={1}
+                    rounded="md"
+                    _hover={{ color: hoverTextColor }}
+                  >
+                    {link.label}
+                  </Box>
+                </Link>
               ))}
             </HStack>
           </HStack>
           <Flex alignItems="center" m={2}>
             {Auth.loggedIn() ? (
-              <Box onClick={Auth.logout}>
-                Logout
-              </Box>
+                <Box onClick={Auth.logout}
+                _hover={{
+                  color: hoverTextColor,
+                  cursor: 'pointer', // Apply custom cursor style on hover
+                }}
+                >
+                  Logout
+                </Box>
             ) : (
               <>
-                <NavLink to="/login" style={{ marginRight: '10px' }}>Login</NavLink>
+                <Box as={Link} to="/login" 
+                  style={{ marginRight: '10px' }}
+                  _hover={{
+                    color: hoverTextColor,
+                    cursor: 'pointer', // Apply custom cursor style on hover
+                  }}
+                >Login</Box>
                 {/* Below was commented up for a better mobile responsive view. Signup link, added to /Login */}
                 {/* <NavLink to="/signup">Sign Up</NavLink> */}
               </>
@@ -101,7 +104,12 @@ const Navbar = () => {
                 </NavLink>
               ))}
               {Auth.loggedIn() && (
-                <Box onClick={Auth.logout}>
+                <Box onClick={Auth.logout}
+                _hover={{
+                  color: hoverTextColor,
+                  cursor: 'pointer', // Apply custom cursor style on hover
+                }}
+                >
                   Logout
                 </Box>
               )}
