@@ -1,27 +1,48 @@
-import { AspectRatio, Box, Heading, Image, ListItem, Text, UnorderedList } from '@chakra-ui/react';
+import { Box, Image, Heading, Text, UnorderedList, ListItem } from '@chakra-ui/react';
 import theme from '../components/theme';
 import '@fontsource-variable/lexend-peta';
-import redLogo from '../assets/logo-red.png';
-import image1 from '../assets/introPhoto1.jpg';
+import lightLogo from '../assets/logo-light.png';
+import dumbbell from '../assets/dumbbell.jpg';
 
 const Home = () => {
+    const backgroundImageStyle = {
+        backgroundImage: `url(${dumbbell})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'auto',
+        height: '100%', 
+       
+         
+    };
+
     return (
-        <Box display={'flex'} flexDirection={'column'} alignItems={'center'} margin={5}  mb={10}>
-            <Box>
-            <Image src={image1} alt="https://unsplash.com/@kikekiks"></Image>
-            {/* <AspectRatio>
-                <iframe src={tbd} title='Lymb intro' allowFullScreen />
-            </AspectRatio> */}
+        <Box
+            display={'flex'}
+            flexDirection={'column'}
+            alignItems={'center'}
+            margin={5}
+            mb={10}
+            style={backgroundImageStyle}  
+        >
+            
+            <Box position="relative" mb={20}>
+                <Image mt={20} src={lightLogo} alt="Red Logo" boxSize={350} />
             </Box>
-            <Image src={redLogo} boxSize={250}my={10} />
-            <Heading mb={10} fontFamily={theme.fonts.heading} as='p' size='lg' color={theme.colors.carmine}>❮❮ Your workout buddy! ❯❯</Heading>
-            <Text fontWeight={'bold'} fontSize={'1.2em'} mb={3}>Create your free account to enjoy Lymb's features:</Text>
-            <UnorderedList>
-                <ListItem fontWeight={'bold'} fontSize={'1.1em'}>Choose from our list of exercises</ListItem>
-                {/* <ListItem fontWeight={'bold'} fontSize={'1.1em'}>Automatically generate a workout based on your preferences</ListItem> */}
-                <ListItem fontWeight={'bold'} fontSize={'1.1em'}>Create your own custom workouts</ListItem>
-                <ListItem fontWeight={'bold'} fontSize={'1.1em'}>Use our Interval Timer for your new Workout!</ListItem>
-            </UnorderedList>
+            
+            <Box textAlign="center" >
+                <Heading mb={10} fontFamily={theme.fonts.heading} as='p' size='lg' color={theme.colors.carmine}>
+                    ❮❮ Your workout buddy! ❯❯
+                </Heading >
+                <Text fontWeight={'bold'} fontSize={'1.2em'} mb={3} color={'white'}>
+                    Create your free account to enjoy LYMB's features:
+                </Text>
+                <UnorderedList p={8} fontWeight={'bold'} fontSize={'1.1em'} color={'white'} textAlign={"center"} >
+                    <ListItem p={1}>Choose from our list of exercises</ListItem>
+                    {/* <ListItem fontWeight={'bold'} fontSize={'1.1em'}>Automatically generate a workout based on your preferences</ListItem> */}
+                    <ListItem p={1}>Create your own custom workouts</ListItem>
+                    <ListItem p={1}>Use our Interval Timer for your new Workout!</ListItem>
+                </UnorderedList>
+            </Box>
         </Box>
     );
 }
