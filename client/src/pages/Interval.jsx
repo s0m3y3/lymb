@@ -166,7 +166,7 @@ const WorkoutTimer = (props) => {
         Exercises
       </Heading>
       {props.workout.exercises.map((exercise,index) =>
-        (Math.ceil(currentSet/(2)) % numberOfExercises) === index + 1 ? (
+        ((Math.ceil(currentSet/(2))-1) % numberOfExercises) === index ? (
           <Card bg="green.500" color="white" key={exercise._id} mb={6}>
             <CardHeader>{exercise.name}</CardHeader>
           </Card>
