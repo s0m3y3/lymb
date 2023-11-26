@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Interval from "./Interval.jsx"
-import { Center, CardHeader, Card, CardBody, Heading, Show, Hide } from "@chakra-ui/react";
+import { Center, CardHeader, Card, CardBody, Heading, Show, Hide, Box } from "@chakra-ui/react";
 
 import { QUERY_EXERCISE, QUERY_ME } from "../utils/queries.js"; // Import your mutations
 import { useQuery, useMutation } from "@apollo/client";
@@ -31,26 +31,18 @@ const ExerciseInterval = () => {
     console.error(error);
     return <div>Error loading data</div>;
   }
-
-  console.log(workout);
-  console.log(workoutId);
-
-
+  // console.log(workout);
+  // console.log(workoutId);
 
   return (
-    <Center>
-      <div>
-      <Interval workout={workout}/>
-      </div>
-      
-      <div className="timer-wrapper">
-        <br />
-        <br />
-        <div style={{ display: "flex" }}></div>
-
-
-
-      </div>
+    <Center mt={5}>
+      <Box>
+        <Interval workout={workout}/>
+      </Box>
+    
+      <Box className="timer-wrapper">
+        <Box style={{ display: "flex" }}></Box>
+      </Box>
     </Center>
   );
   
