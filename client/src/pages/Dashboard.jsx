@@ -7,6 +7,8 @@ import {
   CardHeader,
   Divider,
   Heading,
+  Flex,
+  Spacer,
   Text,
   VStack,
   Wrap,
@@ -40,9 +42,12 @@ const Dashboard = () => {
   const [createWorkout, { errorCreate }] = useMutation(CREATE_WORKOUT);
 
   const [exercises, setExercises] = useState([]);
+  const [disallowSort, toggleSort] = useState(true);
   const [workoutName, setWorkoutName] = useState("");
   const [workoutId, setWorkoutId] = useState("");
+  const [thisWorkout, setThisWorkout] = useState({});
   const [hideElements, toggleHideElements] = useState(true);
+  const [hideX, toggleHideX] = useState(true);
   //load in queried logged in user data
   const { loading, data, refetch } = useQuery(QUERY_ME);
   const userData = data?.me || {};
@@ -59,6 +64,7 @@ const Dashboard = () => {
       const { data } = await updateWorkout({
         variables: { input: { _id: workoutid, exercises: exerciseid } },
       });
+      await refetch();
     } catch (err) {
       console.error(err);
     }
@@ -79,11 +85,10 @@ const Dashboard = () => {
       const { data } = await createWorkout({
         variables: { input: { name: newName, description: newDescription } },
       });
-     await refetch();
+      await refetch();
     } catch (acold) {
       console.error(acold);
     }
-  
   };
 
   return (
@@ -127,6 +132,7 @@ const Dashboard = () => {
                   setWorkoutName(workout.name);
                   // populateEditElements(<></>);
                   setWorkoutId(workout._id);
+                  setThisWorkout(workout);
                   toggleHideElements(false);
                 }}
               >
@@ -161,7 +167,7 @@ const Dashboard = () => {
             handleCreateWorkout(
               "Click edit to enter a workout name.",
               "Click edit to enter a description of workout."
-            )
+            );
             // refetch()
           }}
         >
@@ -182,20 +188,91 @@ const Dashboard = () => {
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
         >
-          <SortableContext
-            items={exercises.map((exercise, index) => `${exercise._id}-${index}`)}
-            strategy={verticalListSortingStrategy}
-          >
-            {exercises.map((exercise, index) => (
-              <SortableExercise
-                key={`ex-${index}`}
-                id={`${exercise._id}-${index}`}
-                name={exercise.name}
-              />
-            ))}
-          </SortableContext>
-
-          <Heading marginX={3} size="sm" hidden={hideElements}>
+          {disallowSort ? (
+            <>
+              {thisWorkout?.exercises?.map((exercise, index) => (
+                <Card m={3}>
+                  <Flex>
+                    <CardBody>
+                      <div key={`ex2-${index}`}>{exercise.name}</div>
+                    </CardBody>
+                    <Spacer />
+                    {!hideX && (
+                      <Button
+                        onClick={() => {
+                          exercises.splice(
+                            exercises.findIndex(
+                              (item) => item._id == exercise._id
+                            ),
+                            1
+                          );
+                        }}
+                      >
+                        x
+                      </Button>
+                    )}
+                  </Flex>
+                </Card>
+              ))}
+              {hideX && <Button
+                margin={3}
+                onClick={() => {
+                  toggleSort(false);
+                  toggleHideX(true);
+                }}
+              >
+                Sort Exercises
+              </Button>}
+              {hideX && <Button
+                margin={3}
+                onClick={() => {
+                  toggleSort(true);
+                  toggleHideX(false);
+                }}
+              >
+                Delete Exercises
+              </Button>}
+              {!hideX && <Button
+                margin={3}
+                onClick={() => {
+                  toggleSort(true);
+                  toggleHideX(true);
+                }}
+              >
+                Cancel Delete Exercises
+              </Button>}
+            </>
+          ) : (
+            <>
+              <SortableContext
+                items={exercises.map(
+                  (exercise, index) => `${exercise._id}-${index}`
+                )}
+                strategy={verticalListSortingStrategy}
+              >
+                {exercises.map((exercise, index) => (
+                  <SortableExercise
+                    key={`ex-${index}`}
+                    id={`${exercise._id}-${index}`}
+                    name={exercise.name}
+                  />
+                ))}
+              </SortableContext>
+              <Button
+                marginX={3}
+                onClick={() => {
+                  toggleSort(true);
+                  setExercises(
+                    thisWorkout?.exercises?.map((exercise) => exercise)
+                  );
+                  toggleHideX(true);
+                }}
+              >
+                Cancel Sort
+              </Button>
+            </>
+          )}
+          <Heading margin={3} size="sm" hidden={hideElements}>
             To add exercises, vist the browse page
           </Heading>
           <Button
@@ -207,8 +284,12 @@ const Dashboard = () => {
               handleUpdateWorkout(
                 workoutId,
                 exercises.map((exercise) => exercise._id)
-              )
-              refetch();
+              );
+              setThisWorkout(
+                workouts.find((workout) => workout._id == workoutId)
+              );
+              console.log(thisWorkout);
+              toggleSort(true);
             }}
           >
             save
@@ -223,20 +304,20 @@ const Dashboard = () => {
     console.log("ACTIVE: " + active.id);
     console.log("OVER: " + over.id);
     // if (active.id !== over.id) {
-      toggleHideElements(false);
-      setExercises((items) => {
-        console.log(items);
-        const activeIndex = items.findIndex(
-          (exercise,index) =>`${exercise._id}-${index}` === active.id
-        );
-        const overIndex = items.findIndex(
-          (exercise,index) =>`${exercise._id}-${index}` === over.id
-        );
+    toggleHideElements(false);
+    setExercises((items) => {
+      console.log(items);
+      const activeIndex = items.findIndex(
+        (exercise, index) => `${exercise._id}-${index}` === active.id
+      );
+      const overIndex = items.findIndex(
+        (exercise, index) => `${exercise._id}-${index}` === over.id
+      );
 
-        const resortedExercises = arrayMove(items, activeIndex, overIndex);
+      const resortedExercises = arrayMove(items, activeIndex, overIndex);
 
-        return resortedExercises;
-      });
+      return resortedExercises;
+    });
     // }
     console.log(exercises);
   }
