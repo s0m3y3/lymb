@@ -4,17 +4,19 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Flex,
   Heading,
   Image,
   SimpleGrid,
   Container,
+  VStack,
   Wrap,
 } from "@chakra-ui/react";
 import AddToWorkoutModal from "../components/AddToWorkoutModal.jsx";
 import theme from "../components/theme";
 import "@fontsource-variable/lexend-peta"; //font theme. 
 import { useQuery } from '@apollo/client';
-import { QUERY_EXERCISE} from '../utils/queries.js'; 
+import { QUERY_EXERCISE, QUERY_WORKOUT} from '../utils/queries.js'; 
 import React, {useEffect, useState} from 'react';
 import getBrowseData from '../utils/browserImport.js' //Generates images and name for "Browse By Type"
 
@@ -23,6 +25,11 @@ const Browse = () => {
   const typeData = getBrowseData();
   const {loading, data, error } = useQuery(QUERY_EXERCISE);
   const exerciseDataJson = data?.exercises || [];
+
+  const {loading: workoutLoading, data: workoutData, error: workoutError } = useQuery(QUERY_WORKOUT);
+  const WorkoutDataJson = workoutData?.exercises || [];
+  console.log(WorkoutDataJson)
+
 // console.log(data)
   const [selectedType, setSelectedType] = useState(''); //Browse-Type that the user selects.
   const [exerciseData, setExerciseData] = useState(exerciseDataJson); //modified exercisedata to be displayed in results
@@ -41,7 +48,8 @@ const Browse = () => {
  //end modal state and functions for open and close
  ////////////////////////////////////////////////// 
  
-
+// Update exerciseData state when data changes; ALSO, loads exercise list when refreshing or loading Browse for the first time.
+useEffect(() => {if (data) {setExerciseData(data.exercises || []);}}, [data]);
  
  const handleTypeClick = (type) => {
     //logic: check previous type, if equal to type, then set it to blank. Otherwise, set to type. 
@@ -66,6 +74,22 @@ const Browse = () => {
 
 {/*Browse Type Section */}
     <Box my={10} display="flex" flexDirection={'column'}>
+
+{/* Browse by Workout */}
+{/* <Heading mb={5} alignSelf='center' fontFamily={theme.fonts.heading} as="h2" size="md">
+        Browse by Workout
+      </Heading>
+      <Flex overflowX="auto" >
+      {WorkoutDataJson.map((workout, index) => (
+        <Card key={index}  m={2} w="150px" h="150px" minW="150px" minH="150px"  maxW="150px" maxH="150px">
+          <CardHeader fontWeight="bold" fontSize="large">{workout.name}</CardHeader>
+          <VStack flex={1} justify="flex-end" alignItems="flex-start">
+            <Button minH="40px" minW="150px">Click to add</Button>
+          </VStack>
+        </Card>
+        ))}
+    </Flex> */}
+
       <Heading mb={5} alignSelf='center' fontFamily={theme.fonts.heading} as="h2" size="md">
         Browse by Type
       </Heading>

@@ -6,6 +6,8 @@ import {
   FormHelperText,
   Input,
   Button,
+  Box,
+  Link
 } from "@chakra-ui/react";
 import { Form } from 'react-router-dom';
 
@@ -97,6 +99,12 @@ const LoginForm = () => {
           />
           {/* <FormHelperText type="invalid">Password is required!</FormHelperText> */}
         </FormControl>
+
+        <Box marginY={5}>
+          No Account? 
+          <Link href="/signup" > Signup</Link>
+        </Box>
+
         <Button
           disabled={!(userFormData.email && userFormData.password)}
           type="submit"
