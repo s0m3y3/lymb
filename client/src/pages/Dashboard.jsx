@@ -29,7 +29,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SortableExercise } from "../components/SortableExercise";
 //allow queries
 import { useQuery, useMutation } from "@apollo/client";
@@ -48,7 +48,6 @@ const Dashboard = () => {
   const [thisWorkout, setThisWorkout] = useState({});
   const [hideElements, toggleHideElements] = useState(true);
   const [hideX, toggleHideX] = useState(true);
-  //load in queried logged in user data
   const { loading, data, refetch } = useQuery(QUERY_ME);
   const userData = data?.me || {};
 
@@ -75,6 +74,7 @@ const Dashboard = () => {
       const { data } = await deleteWorkout({
         variables: { input: { _id: workoutid } },
       });
+      await refetch();
     } catch (meoutside) {
       console.error(meoutside);
     }
@@ -144,7 +144,7 @@ const Dashboard = () => {
                 color={theme.colors.antiFlashWhite}
                 onClick={() => {
                   handleDeleteWorkout(workout._id);
-                  refetch();
+                  
                 }}
               >
                 Delete
@@ -174,6 +174,8 @@ const Dashboard = () => {
           Create Workout
         </Button>
       </VStack>
+
+      {!hideElements &&
       <Box
         as={"aside"}
         bg={theme.colors.timberwolf}
@@ -191,15 +193,15 @@ const Dashboard = () => {
           {disallowSort ? (
             <>
               {thisWorkout?.exercises?.map((exercise, index) => (
-                <Card m={3}>
+                <Card m={3} key={`ex3-${index}`} borderColor={'red.200'}>
                   <Flex>
                     <CardBody>
-                      <div key={`ex2-${index}`}>{exercise.name}</div>
+                      <div >{exercise.name}</div>
                     </CardBody>
                     <Spacer />
                     {!hideX && (
                       <Button
-                        onClick={() => {
+                        onClick={(e) => {
                           exercises.splice(
                             exercises.findIndex(
                               (item) => item._id == exercise._id
@@ -215,6 +217,7 @@ const Dashboard = () => {
                 </Card>
               ))}
               {hideX && <Button
+              hidden={hideElements}
                 margin={3}
                 onClick={() => {
                   toggleSort(false);
@@ -224,6 +227,7 @@ const Dashboard = () => {
                 Sort Exercises
               </Button>}
               {hideX && <Button
+              hidden={hideElements}
                 margin={3}
                 onClick={() => {
                   toggleSort(true);
@@ -233,10 +237,14 @@ const Dashboard = () => {
                 Delete Exercises
               </Button>}
               {!hideX && <Button
+              hidden={hideElements}
                 margin={3}
                 onClick={() => {
                   toggleSort(true);
                   toggleHideX(true);
+                  setExercises(
+                    thisWorkout?.exercises?.map((exercise) => exercise)
+                  );
                 }}
               >
                 Cancel Delete Exercises
@@ -245,6 +253,7 @@ const Dashboard = () => {
           ) : (
             <>
               <SortableContext
+              
                 items={exercises.map(
                   (exercise, index) => `${exercise._id}-${index}`
                 )}
@@ -259,6 +268,7 @@ const Dashboard = () => {
                 ))}
               </SortableContext>
               <Button
+                hidden={hideElements}
                 marginX={3}
                 onClick={() => {
                   toggleSort(true);
@@ -285,17 +295,16 @@ const Dashboard = () => {
                 workoutId,
                 exercises.map((exercise) => exercise._id)
               );
-              setThisWorkout(
-                workouts.find((workout) => workout._id == workoutId)
-              );
               console.log(thisWorkout);
               toggleSort(true);
+              toggleHideX(true)
+              toggleHideElements(true)
             }}
           >
             save
           </Button>
         </DndContext>
-      </Box>
+      </Box>}
     </Wrap>
   );
   function handleDragEnd(event) {
