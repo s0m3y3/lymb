@@ -90,6 +90,18 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
+
+    deleteExerciseFromWorkout: async (parent, { input }, context) => {
+      if (context.user) {
+       const updatedWorkout = await Workout.findOneAndUpdate(
+          { _id: input._id },
+          { $pull: { exercises: input.exercises } },
+          { new: true }
+        );
+        return updatedWorkout;
+      }
+      throw AuthenticationError;
+    },
     updateWorkout: async (parent, { input }, context) => {
       if (context.user) {
         const updatedWorkout = await Workout.findOneAndUpdate(
