@@ -24,7 +24,23 @@ const Links = [
   { label: 'Dashboard', to: '/dashboard' },
   { label: 'Browse', to: '/browse' },
 ];
-
+const NavLink = ({ children, to }) => {
+  return (
+    <Link
+      to={to}
+      as={Button}
+      px={2}
+      py={1}
+      rounded="md"
+      _hover={{
+        textDecoration: 'none',
+        bg: useColorModeValue('gray.200', 'gray.700'),
+      }}
+    >
+      {children}
+    </Link>
+  );
+};
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navBackgroundColor = useColorModeValue(theme.colors.carmine);
