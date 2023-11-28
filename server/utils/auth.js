@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { GraphQLError } = require('graphql');
-const secret = 'mysecretsshhhhh';
+const secret = process.env.SECRET;
 const expiration = '2h';
 
 module.exports = {
