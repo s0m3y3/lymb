@@ -1,4 +1,7 @@
+[<img src="https://img.shields.io/badge/License-MIT-yellow.svg">](https://opensource.org/licenses/MIT)
+
 # LYMB
+
 A fitness app. 
 
 ## Table of Contents (Optional)
@@ -18,17 +21,31 @@ A fitness app designed to help users achieve their health goals by providing per
 Additionally, it offers daily motivational quotes to support users on their fitness journey. With an intuitive interface and easy-to-use tools, this fitness app aims to promote a healthier lifestyle, and encourage users to stay active and engaged in their fitness routines. 
 
 ## Installation
-(pending...)
+Download the project from repo. 
+Please ensure you check your package.json for list of dependencies. 
 
 ## Usage
-(pending...)
+Use navigation bar to access different pages.
+(bullet point for yee)
+Dashboard
+Browse
+Login/Signup
+
+How to add exercise: 
+<video>
+
+(overview video)
+
+![](./client/src/assets/demo0.gif)
+
 
 ## Credits 
-Github:  
-[leex](https://github.com/leex3683/)  
-[liex149](https://github.com/liex149/)  
-[IsabellaKingson](https://github.com/IsabellaKingson)  
-[s0m3y3](https://github.com/s0m3y3/)  
+Special Thanks for Dillon, our TA!  
+(Drag&Drop)
+https://www.youtube.com/watch?v=Z8RoA_YSGDQ  
+(chakraUI)
+https://www.youtube.com/playlist?list=PL4cUxeGkcC9hcnIeryurNMMcGBHp7AYlP  
+
 
 ## License
   MIT License
@@ -44,4 +61,8 @@ Github:
 (pending...)
 
 ## Contact
-(pending...)
+Github:  
+[leex](https://github.com/leex3683/)  
+[liex149](https://github.com/liex149/)  
+[IsabellaKingson](https://github.com/IsabellaKingson)  
+[s0m3y3](https://github.com/s0m3y3/)  

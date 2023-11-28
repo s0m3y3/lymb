@@ -30,8 +30,8 @@ const Home = () => {
             </Box>
             
             <Box textAlign="center" >
-                <Heading mb={10} fontFamily={theme.fonts.heading} as='p' size='lg' color={theme.colors.carmine}>
-                    ❮❮ Your workout buddy! ❯❯
+                <Heading mb={10} fontFamily={theme.fonts.heading} as='p' size='lg' color={theme.colors.white}>
+                    ❮❮ Love Your Mind & Body ❯❯
                 </Heading >
                 <Text fontWeight={'bold'} fontSize={'1.2em'} mb={3} color={'white'}>
                     Create your free account to enjoy LYMB's features:
