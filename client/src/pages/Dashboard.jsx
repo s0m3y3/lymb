@@ -135,7 +135,7 @@ const Dashboard = () => {
         borderWidth="1px"
         borderRadius="lg"
         overflow="hidden"
-        minW="50%"
+        minW="95%"
         bg={theme.colors.timberwolf}
       >
         <Heading
@@ -217,7 +217,8 @@ const Dashboard = () => {
         <Box
           as={"aside"}
           bg={theme.colors.timberwolf}
-          minW="30%"
+          minW="95%"
+          borderRadius='2%'
           h="100%"
           alignContent={"center"}
           // padding={0}
