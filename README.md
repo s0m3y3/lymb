@@ -29,9 +29,8 @@ Additionally, it offers daily motivational quotes to support users on their fitn
   - To install project dependencies, navigate to the root folder and run the following command:
       ```sh
     npm install
-  - In the server folder, rename `.envExample` to `.env` and update environment variables as needed.
-
-
+  - In the server folder: 
+    - Rename `.envExample` to `.env` and update environment variables as needed.
 
 * **Run the Website**
   - Start the application locally by running the necessary commands for your setup.
@@ -78,7 +77,7 @@ Additionally, it offers daily motivational quotes to support users on their fitn
 [<img src="https://img.shields.io/badge/License-MIT-yellow.svg">](https://opensource.org/licenses/MIT)
 
 ## Acknowledgements
-A BIG Special Thank You to our Instructor, Nathian, and our TAs, Dillon & Reed, for their invaluable guidance and support!
+A BIG Special Thank You to our Instructor, Nathan H., and our TAs, Dillon R. & Reed M., for their invaluable guidance and support!
 
 ## Contact
 Project Contributor's Github:  
