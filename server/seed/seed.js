@@ -88,7 +88,7 @@ connection.once('open', async () => {
     //function that randomly returns, 1-3 workout
     async function getRandomWorkoutIDs() {
       //random number generator, 1-3
-      const numWorkouts = Math.floor(Math.random() * 4);
+      const numWorkouts = Math.floor(Math.random() * 3+1);
       //grabs workout.
       const setWorkout = databaseWorkout.slice(0, numWorkouts);
       //pulls only workout ID. 
